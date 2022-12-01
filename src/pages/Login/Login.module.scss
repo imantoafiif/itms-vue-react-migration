@@ -1,0 +1,231 @@
+.login_full {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  background-image: linear-gradient(
+    to top right,
+    white,
+    rgba(255, 255, 255, 0.3)
+  );
+  background-blend-mode: darken;
+  z-index: 1;
+}
+
+.login_page {
+  position: relative;
+  // background-image: url("/img/askrindo-wallpaper-rev.jpg");
+  background-position-y: -64px;
+  background-position-x: right;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh; 
+  width: 100vw;
+  /* background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  /* background: #00b4db;
+  background: -webkit-linear-gradient(to bottom, #0083b0, #00b4db);
+  background: linear-gradient(to bottom, #0083b0, #00b4db); */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__card {
+    position: absolute;
+    right: 5%;
+    min-width: 360px;
+    border-radius: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 8px solid rgba(0, 0, 0, 0.1);
+
+    background-color: rgba(255, 255, 255, 1);
+
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15), 0 8px 16px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &__card__brand {
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.1);
+
+    > img {
+      width: auto;
+      height: 48px;
+      object-fit: contain;
+    }
+  }
+
+  &__card__main {
+    padding: 2rem;
+  }
+}
+
+.login_page_button {
+  &,
+  &:focus,
+  &:active {
+    border: none;
+    outline: none;
+  }
+}
+
+.login_input {
+  & + & {
+    margin-top: 2rem;
+  }
+
+  &__label {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    color: #409eff;
+  }
+
+  &__field {
+    display: flex;
+    align-items: center;
+
+    position: relative;
+    padding: 4px;
+    border-bottom: 1px solid #ddd;
+
+    > i {
+      position: absolute;
+      color: #999;
+      box-sizing: content-box;
+      padding: 8px;
+      width: 16px;
+      height: 16px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        right: 0;
+      }
+
+      &.icon-toggleable {
+        &:hover {
+          cursor: pointer;
+          background-color: #eee;
+          border-radius: 9999px;
+          color: #409eff;
+        }
+
+        &.is-active {
+          color: #409eff;
+        }
+      }
+    }
+
+    > input {
+      padding-left: 32px;
+      font-size: 17px;
+      font-weight: 300;
+      color: #404040;
+
+      display: block;
+      width: 100%;
+      border: none;
+
+      background: none !important;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+
+    > select {
+      padding-left: 32px;
+      font-size: 17px;
+      font-weight: 300;
+      color: #404040;
+
+      display: block;
+      width: 100%;
+      border: none;
+
+      background: none !important;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
+    }
+  }
+}
+
+.login_page_button {
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+
+  position: relative;
+  padding: 10px 36px;
+
+  background-color: #409eff;
+  border-radius: 9999px;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: white;
+
+  box-shadow: 0 2px 5px 0 rgba(64, 160, 255, 0.5);
+
+  transition: all 0.3s ease-out;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: block;
+    border-radius: inherit;
+    box-shadow: 0 4px 16px 0 rgba(64, 160, 255, 0.5);
+
+    opacity: 1;
+
+    transition: opacity 0.3s ease-out;
+  }
+
+  &:hover {
+    background-color: #287bcf;
+    transform: translateY(3px);
+  }
+
+  &:hover::before {
+    opacity: 0;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.login_page_button__spinner > i {
+  animation: rotate 1s infinite linear;
+}

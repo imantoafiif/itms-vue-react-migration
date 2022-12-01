@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axios-config";
 import { AccountProvider } from "../../user-account";
 import CryptoJS  from "crypto-js";
-
+import style from './Login.module.scss';
 
 function Login() {
     
@@ -84,12 +84,13 @@ function Login() {
 
     return (
         <>
-            <Guest>
+            {/* <Guest>
                 <section className="hero is-fullheight">
                     <div className="hero-body">
                         <div className="container">
                             <div className="columns is-centered">
-                                <div className="column is-5-tablet is-4-desktop is-3-widescreen">
+                                <div
+                                    className="column is-5-tablet is-4-desktop is-3-widescreen">
                                     <form 
                                         onSubmit={submit}
                                         method="post"
@@ -141,8 +142,60 @@ function Login() {
                         </div>
                     </div>
                 </section>
-            </Guest>
-            
+            </Guest> */}
+        
+
+            <main className={style.login_page}>
+                <form className={style.login_page__card}>
+                    <div className={`${style.login_page__card__brand} is-paddingless`}>
+                        <img 
+                            src="/logo192.png"
+                            style={{height: '150px', padding: '25px'}}/>
+                    </div>
+                    <div className={style.login_page__card__main}>
+                        <div className={style.login_input}>
+                            <label className={style.login_input__label}>
+                                Method
+                            </label>
+                            <div className={style.login_input__field}>
+                                <i className="fa fa-cog"></i>
+                                <select>
+                                    <option>LDAP</option>
+                                    <option>SSO</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className={style.login_input}>
+                            <label className={style.login_input__label}>
+                                Username
+                            </label>
+                            <div className={style.login_input__field}>
+                                <i className="fa fa-user"></i>
+                                <input 
+                                    type="text"
+                                    autoComplete="on"/>
+                            </div>
+                        </div>
+                        <div className={style.login_input}>
+                            <label className={style.login_input__label}>
+                                Password
+                            </label>
+                            <div className={style.login_input__field}>
+                                <i className="fa fa-key"></i>
+                                <input 
+                                    type="password"
+                                    autoComplete="on"/>
+                                <i 
+                                    onClick={e => {}}
+                                    className="fa fa-eye icon-toggleable is-active">
+
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </main>
+
         </>
     )
 }
