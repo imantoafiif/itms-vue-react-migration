@@ -17,9 +17,15 @@ function Login() {
     const [password, setPassword] = useState('')
     const [isLoading, setLoading] = useState(false)
     const [remember, setRemember] = useState(false)
+    const [selectedMethod, setSelectedMethod] = useState('LDAP')
+    const [passwordVisible, setPasswordVisible] = useState(false)
     const account = useContext(AccountProvider)
     const secret = `I!OJ1n4!Nl$cmtv5aB^KK3xV5jNlB72RYSg7OrmoyCBmFpfpmFeZ51LsQ%.VNrNE>uw<P>rnJn6^1!$k>3>TPg'q(B~TBPvRH8/i(s$ucgz+/+e!|`
     var careerPositionAspiration = null;
+    const methods = [
+        { value: 'LDAP', label: 'LDAP' }, 
+        { value: 'SSO', label: 'SSO' }
+    ]
 
     useEffect(() => {
         let uname = localStorage.getItem('auth.user')
@@ -30,6 +36,10 @@ function Login() {
             setRemember(true)
         }
     }, [])
+
+    useEffect(() => {
+        console.log(selectedMethod)
+    }, [selectedMethod])
 
     const login = (e) => {
         console.log('remember', remember)
@@ -100,9 +110,20 @@ function Login() {
                         </label>
                         <div className={style.login_input__field}>
                             <i className="fa fa-cog"></i>
-                            <select>
-                                <option>LDAP</option>
-                                <option>SSO</option>
+                            <select
+                                required 
+                                onChange={e => setSelectedMethod(e.target.value)}>
+                                {
+                                    methods.map(item => 
+                                        <option    
+                                            value={item.value}
+                                            key={item.value}>
+                                            {item.label}    
+                                        </option>
+                                    )
+                                }
+                                {/* <option>LDAP</option>
+                                <option>SSO</option> */}
                             </select>
                         </div>
                     </div>
@@ -113,6 +134,7 @@ function Login() {
                         <div className={style.login_input__field}>
                             <i className="fa fa-user"></i>
                             <input 
+                                required
                                 type="text"
                                 autoComplete="on"/>
                         </div>
@@ -124,18 +146,21 @@ function Login() {
                         <div className={style.login_input__field}>
                             <i className="fa fa-key"></i>
                             <input 
-                                type="password"
+                                required
+                                type={passwordVisible ? 'text' : 'password'}
                                 autoComplete="on"/>
                             <i 
-                                onClick={e => {}}
-                                className="fa fa-eye icon-toggleable is-active">
+                                onClick={() => setPasswordVisible(!passwordVisible)}
+                                className={`fa fa-eye ${style.icon_toggleable}`}>
 
                             </i>
                         </div>
                     </div>
                 </div>
                 <div style={{display: "flex", justifyContent: "center", padding: "1rem 0", marginBottom: "1rem"}}>
-                    <button className={style.login_page_button}>
+                    <button 
+                        type="submit"
+                        className={style.login_page_button}>
                         {
                             isLoading ? 
                             (
