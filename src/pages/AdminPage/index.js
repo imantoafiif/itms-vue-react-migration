@@ -1,8 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { counterSlice } from "../../store/slices/sessionSlice";
 // import WithNav from "../layouts/WithNav";
-import Admin from "../layouts/Admin";
-import { counterSlice } from '../store/slices/sessionSlice'
 
 function AdminPage() {
 

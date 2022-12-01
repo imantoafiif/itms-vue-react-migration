@@ -1,5 +1,5 @@
 import React from "react";
-import WithNav from "../layouts/WithNav";
+import WithNav from "../../layouts/WithNav";
 
 function Notfound() {
     return (

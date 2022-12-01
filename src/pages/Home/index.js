@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
-import PrivateRoute from "../middleware/PrivateRoute";
-import { increment } from '../store/slices/sessionSlice';
-import WithNav from "../layouts/WithNav";
+import PrivateRoute from "../../middleware/PrivateRoute";
+import { increment } from '../../store/slices/sessionSlice';
+import WithNav from "../../layouts/WithNav";
 import { useDispatch, useSelector } from "react-redux";
-import { getSession } from "../helper";
-import { AccountProvider } from "../user-account";
+import { getSession } from "../../helper";
+import { AccountProvider } from "../../user-account";
 
 function Home() {
 

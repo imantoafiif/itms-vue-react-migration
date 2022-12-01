@@ -6,9 +6,9 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login'
-import Home from './pages/Home'
 import Page1 from './pages/Page1'
 import Page2 from './pages/Page2';
+import Home from './pages/Home';
 import AdminPage from './pages/AdminPage';
 import Admin from './layouts/Admin';
 import Notfound from './pages/Notfound';

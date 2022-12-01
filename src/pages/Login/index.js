@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import Guest from "../middleware/Guest";
-import { userSlice, setSession } from '../store/slices/sessionSlice';
+import Guest from "../../middleware/Guest";
+import { userSlice, setSession } from '../../store/slices/sessionSlice';
 import { useDispatch, useSelector } from "react-redux";
-import axios from "../axios-config";
-import { AccountProvider } from "../user-account";
+import axios from "../../axios-config";
+import { AccountProvider } from "../../user-account";
 import CryptoJS  from "crypto-js";
 
 

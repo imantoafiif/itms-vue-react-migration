@@ -1,6 +1,6 @@
 import React from "react";
-import PrivateRoute from "../middleware/PrivateRoute";
-import WithNav from "../layouts/WithNav";
+import WithNav from "../../layouts/WithNav";
+import PrivateRoute from "../../middleware/PrivateRoute";
 
 function Page2() {
     return (

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import PrivateRoute from "../middleware/PrivateRoute";
-import WithNav, { Theme } from "../layouts/WithNav";
-import { Account } from "../user-account";
+import PrivateRoute from "../../middleware/PrivateRoute";
+import { Theme } from "../../layouts/WithNav";
 // import Admin from "../layouts/Admin";
 
 function Page1() {
