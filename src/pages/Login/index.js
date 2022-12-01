@@ -31,7 +31,7 @@ function Login() {
         }
     }, [])
 
-    const submit = (e) => {
+    const login = (e) => {
         console.log('remember', remember)
         e.preventDefault()
         setLoading(true)
@@ -83,120 +83,73 @@ function Login() {
     }
 
     return (
-        <>
-            {/* <Guest>
-                <section className="hero is-fullheight">
-                    <div className="hero-body">
-                        <div className="container">
-                            <div className="columns is-centered">
-                                <div
-                                    className="column is-5-tablet is-4-desktop is-3-widescreen">
-                                    <form 
-                                        onSubmit={submit}
-                                        method="post"
-                                        action="" 
-                                        className="box">
-                                        <div className="field">
-                                            <label className="label">User</label>
-                                            <div className="control has-icons-left">
-                                                <input
-                                                    value={user}  
-                                                    onChange={e => setUser(e.target.value)}
-                                                    className="input" required/>
-                                                <span className="icon is-small is-left">
-                                                <i className="fa fa-user"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="field">
-                                            <label className="label">Password</label>
-                                            <div className="control has-icons-left">
-                                                <input 
-                                                    value={password}
-                                                    onChange={e => setPassword(e.target.value)}
-                                                    type="password" className="input" required/>
-                                                <span className="icon is-small is-left">
-                                                <i className="fa fa-lock"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div className="field">
-                                            <label className="checkbox">
-                                                <input
-                                                    checked={remember}
-                                                    onChange={e => setRemember(e.target.checked)}
-                                                    type="checkbox"/>
-                                                Remember me
-                                            </label>
-                                        </div>
-                                        <div className="field">
-                                            <button
-                                                disabled={isLoading} 
-                                                className={`button is-success ${isLoading ? 'is-loading' : ''}`}>
-                                                Login
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+        <main className={style.login_page}>
+            <form 
+                onSubmit={login}
+                method="post"
+                className={style.login_page__card}>
+                <div className={`${style.login_page__card__brand} is-paddingless`}>
+                    <img 
+                        src="/logo192.png"
+                        style={{height: '150px', padding: '25px'}}/>
+                </div>
+                <div className={style.login_page__card__main}>
+                    <div className={style.login_input}>
+                        <label className={style.login_input__label}>
+                            Method
+                        </label>
+                        <div className={style.login_input__field}>
+                            <i className="fa fa-cog"></i>
+                            <select>
+                                <option>LDAP</option>
+                                <option>SSO</option>
+                            </select>
                         </div>
                     </div>
-                </section>
-            </Guest> */}
-        
-
-            <main className={style.login_page}>
-                <form className={style.login_page__card}>
-                    <div className={`${style.login_page__card__brand} is-paddingless`}>
-                        <img 
-                            src="/logo192.png"
-                            style={{height: '150px', padding: '25px'}}/>
-                    </div>
-                    <div className={style.login_page__card__main}>
-                        <div className={style.login_input}>
-                            <label className={style.login_input__label}>
-                                Method
-                            </label>
-                            <div className={style.login_input__field}>
-                                <i className="fa fa-cog"></i>
-                                <select>
-                                    <option>LDAP</option>
-                                    <option>SSO</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className={style.login_input}>
-                            <label className={style.login_input__label}>
-                                Username
-                            </label>
-                            <div className={style.login_input__field}>
-                                <i className="fa fa-user"></i>
-                                <input 
-                                    type="text"
-                                    autoComplete="on"/>
-                            </div>
-                        </div>
-                        <div className={style.login_input}>
-                            <label className={style.login_input__label}>
-                                Password
-                            </label>
-                            <div className={style.login_input__field}>
-                                <i className="fa fa-key"></i>
-                                <input 
-                                    type="password"
-                                    autoComplete="on"/>
-                                <i 
-                                    onClick={e => {}}
-                                    className="fa fa-eye icon-toggleable is-active">
-
-                                </i>
-                            </div>
+                    <div className={style.login_input}>
+                        <label className={style.login_input__label}>
+                            Username
+                        </label>
+                        <div className={style.login_input__field}>
+                            <i className="fa fa-user"></i>
+                            <input 
+                                type="text"
+                                autoComplete="on"/>
                         </div>
                     </div>
-                </form>
-            </main>
+                    <div className={style.login_input}>
+                        <label className={style.login_input__label}>
+                            Password
+                        </label>
+                        <div className={style.login_input__field}>
+                            <i className="fa fa-key"></i>
+                            <input 
+                                type="password"
+                                autoComplete="on"/>
+                            <i 
+                                onClick={e => {}}
+                                className="fa fa-eye icon-toggleable is-active">
 
-        </>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div style={{display: "flex", justifyContent: "center", padding: "1rem 0", marginBottom: "1rem"}}>
+                    <button className={style.login_page_button}>
+                        {
+                            isLoading ? 
+                            (
+                                <span className="login-page-button__spinner">
+                                    <i clasclassNames="fa fa-spinner"></i>
+                                </span>
+                            ) :
+                            (<span>LOGIN</span>)
+                        }
+                    </button>
+                </div>
+                <br></br>
+            </form>
+        </main>
     )
 }
 
