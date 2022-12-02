@@ -229,3 +229,9 @@
 .login_page_button__spinner > i {
   animation: rotate 1s infinite linear;
 }
+
+.login_error {
+  max-width: 70%;
+  margin: auto;
+  font-size: 13px;
+}
