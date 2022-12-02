@@ -139,7 +139,11 @@ function Login() {
                             <i className="fa fa-cog"></i>
                             <select
                                 required 
-                                onChange={e => setSelectedMethod(e.target.value)}>
+                                onChange={e => {
+                                    user.current.value = ''
+                                    password.current.value = ''
+                                    setSelectedMethod(e.target.value)
+                                }}>
                                 {
                                     methods.map(item => 
                                         <option    
