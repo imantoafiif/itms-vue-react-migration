@@ -8,7 +8,7 @@ import './App.css';
 import Login from './pages/Login'
 import Page1 from './pages/Page1'
 import Page2 from './pages/Page2';
-import Home from './pages/Home';
+import Home from './pages/Homepage';
 import AdminPage from './pages/AdminPage';
 import Admin from './layouts/Admin';
 import Notfound from './pages/Notfound';
@@ -46,12 +46,12 @@ function App() {
           <Route exact path='' 
             element={
               account.user ?                 
-              <Navigate to='/home'></Navigate> : 
+              <Navigate to='/homepage'></Navigate> : 
               <Navigate to='/login'></Navigate>
             }>
           </Route>
           <Route path='/' element={<WithNav/>}>
-            <Route exact path='home' element={<Home/>}></Route>
+            <Route exact path='homepage' element={<Home/>}></Route>
             <Route exact path='page1' element={<Page1/>}></Route>
             <Route path='admin/' element={<Admin/>}>
               <Route path='' element={<AdminPage/>}></Route>

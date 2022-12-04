@@ -9,9 +9,7 @@ export const Theme = createContext()
 function WithNav() {
 
     const [store, setStore] = useState({
-        data: {
-            color_theme: '#fff',
-        },
+        data: null,
         changeTheme: c => {
             setStore(prevstate => ({
                 ...prevstate,
@@ -47,7 +45,7 @@ function WithNav() {
 
     return (
         <Theme.Provider value={store}>
-            <Navbar color={store.data.color_theme}/>
+            <Navbar/>
             <Outlet/>
         </Theme.Provider>
         

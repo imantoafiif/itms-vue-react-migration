@@ -14,7 +14,7 @@ const Guest = (props) => {
            { 
                 !session ?
                 props.children : 
-                <Navigate to='/home'></Navigate>
+                <Navigate to='/homepage'></Navigate>
            }
         </>
     )

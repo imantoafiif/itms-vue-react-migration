@@ -106,10 +106,10 @@ function Login() {
                     // localStorage.setItem('auth.session', session)
                     account.set(re.data.data)
                     console.log('mboke', account)
-                    navigate('/home')
+                    navigate('/homepage')
                 })
                 // localStorage.setItem('token', r.data.access_token)
-                // navigate('/home')
+                // navigate('/homepage')
             }
         })
         .catch(e => {
