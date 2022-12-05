@@ -112,7 +112,7 @@ function Navbar() {
                         </div>
                         <div className="navbar-item has-dropdown is-hoverable">
                             <a className="navbar-link has-text-white">
-                                {user.user?.personal.complete_name}
+                                {user.user?.personal.complete_name || user.user?.username}
                             </a>
                             <div className="navbar-dropdown is-right is-boxed">
                                 <a 
@@ -140,9 +140,15 @@ function Navbar() {
                             <i className="fa fa-lg fa-regular fa-bell"
                                 aria-hidden="true">
                             </i>
-                            <span className={`${style.notif_tag} tag badge is-rounded is-danger`}>
-                                {user.user?.notification.length}
-                            </span>
+                            {
+                                user.user?.notification.length > 0 &&
+                                (
+                                    <span className={`${style.notif_tag} tag badge is-rounded is-danger`}>
+                                        {user.user?.notification.length}
+                                    </span>
+                                )
+                            }
+                            
                         </Link>
                     </div>
                 </div>

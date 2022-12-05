@@ -13,7 +13,7 @@ function Admin() {
                     className="columns">
                     <div
                         style={{borderRight: '1px solid #d3d3d3'}} 
-                        className="column is-2">
+                        className="column is-2 pt-0">
                         <Sidebar></Sidebar>
                     </div>
                     <div className="column">

@@ -1,0 +1,135 @@
+$active: rgba(230, 230, 230, 0.3);
+$sidebar: #fff;
+
+.sidebar {
+  position: fixed;
+  background: #fff;
+  width: 20%;
+  height: 100%;
+  // z-index: 5;
+  box-shadow: 1px 5px 12px #ededed;
+  overflow: auto;
+  background: $sidebar;
+
+  &-menu-child {
+    -webkit-transition: background-color .3s;
+    transition: background-color .3s;
+    color: #696969;
+
+    &-bottom {
+      border-bottom: 1px solid rgba(200, 200, 200, .4);
+    }
+
+    &:hover {
+      background: $active;
+    }
+
+  }
+
+  &-menu__group {
+    & + & {
+      margin-top: 1rem;
+    }
+
+    &__title {
+      cursor: pointer;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+
+      line-height: 2;
+      color: rgba(236, 239, 241, 1);
+
+      &:hover {
+        color: white;
+      }
+
+      &[active] {
+        color: rgba(0, 184, 212, 1);
+      }
+    }
+  }
+
+  &-menu__list {
+    display: block;
+    overflow: hidden;
+
+    &-item {
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-column-gap: 1rem;
+      align-items: baseline;
+
+      line-height: 2;
+      font-size: 14px;
+      color: rgba(236, 239, 241, 0.7);
+
+      &:hover {
+        color: rgba(0, 184, 212, 1);
+      }
+
+      &[active] {
+        color: rgba(0, 184, 212, 1);
+      }
+    }
+  }
+
+  &-icon {
+    display: inline-block;
+  }
+
+  &-menu-parent {
+    -webkit-transition: background-color .3s;
+    transition: background-color .3s;
+    padding: 10px 15px;
+    background-color: $sidebar;
+
+    &-active {
+      // background-color: $active;
+    }
+
+    &:hover {
+      background: $active;
+    }
+
+  }
+
+  &-icon-space {
+    font-size: 18px;
+    overflow: visible;
+    max-width: 15%;
+    font-size: 15px;
+  }
+}
+
+.expand-toggle {
+  > i {
+    transition: transform 0.3s ease-out;
+  }
+
+  &:not([active]) > i {
+    transform: rotate(180deg);
+  }
+}
+
+.menu-list-transition {
+  &-enter-active {
+    transition: all 0.3s ease-out;
+  }
+
+  &-enter {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+}
+
+.dropdown-item:hover {
+  background: rgba(0, 0, 0, .5);
+}

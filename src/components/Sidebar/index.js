@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import style from './Sidebar.module.scss';
 
 function Sidebar() {
     const menus = [
@@ -9,7 +10,12 @@ function Sidebar() {
     ]
 
     return (
-        <aside className="menu">
+        <aside className={style.sidebar}>
+            <div className="sidebar-menu is-hidden-mobile">
+                <div className="sidebar-menu">
+                    
+                </div>
+            </div>
             <ul className="menu-list">
                 {menus.map((item, key) => (
                     <li key={key}>

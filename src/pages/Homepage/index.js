@@ -23,10 +23,6 @@ function Home() {
         getBooks()
     }, [])
 
-    useEffect(() => {
-        console.log('and i could be long', user)
-    }, [user])
-
     const getBooks = async () => {
         await axios.get(`/hcis/api/guide-book`, {
             params: {
