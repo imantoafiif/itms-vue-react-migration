@@ -120,103 +120,105 @@ function Login() {
     }
 
     return (
-        <main className={style.login_page}>
-            <form 
-                onSubmit={login}
-                method="post"
-                className={style.login_page__card}>
-                <div className={`${style.login_page__card__brand} is-paddingless`}>
-                    <img 
-                        src="/logo192.png"
-                        style={{height: '150px', padding: '25px'}}/>
-                </div>
-                <div className={style.login_page__card__main}>
-                    <div className={style.login_input}>
-                        <label className={style.login_input__label}>
-                            Method
-                        </label>
-                        <div className={style.login_input__field}>
-                            <i className="fa fa-cog"></i>
-                            <select
-                                required 
-                                onChange={e => {
-                                    user.current.value = ''
-                                    password.current.value = ''
-                                    setSelectedMethod(e.target.value)
-                                }}>
-                                {
-                                    methods.map(item => 
-                                        <option    
-                                            value={item.value}
-                                            key={item.value}>
-                                            {item.label}    
-                                        </option>
-                                    )
-                                }
-                                {/* <option>LDAP</option>
-                                <option>SSO</option> */}
-                            </select>
-                        </div>
+        <Guest>
+            <main className={style.login_page}>
+                <form 
+                    onSubmit={login}
+                    method="post"
+                    className={style.login_page__card}>
+                    <div className={`${style.login_page__card__brand} is-paddingless`}>
+                        <img 
+                            src="/logo192.png"
+                            style={{height: '150px', padding: '25px'}}/>
                     </div>
-                    <div className={style.login_input}>
-                        <label className={style.login_input__label}>
-                            Username
-                        </label>
-                        <div className={style.login_input__field}>
-                            <i className="fa fa-user"></i>
-                            <input 
-                                ref={user}
-                                required
-                                type="text"
-                                autoComplete="on"/>
+                    <div className={style.login_page__card__main}>
+                        <div className={style.login_input}>
+                            <label className={style.login_input__label}>
+                                Method
+                            </label>
+                            <div className={style.login_input__field}>
+                                <i className="fa fa-cog"></i>
+                                <select
+                                    required 
+                                    onChange={e => {
+                                        user.current.value = ''
+                                        password.current.value = ''
+                                        setSelectedMethod(e.target.value)
+                                    }}>
+                                    {
+                                        methods.map(item => 
+                                            <option    
+                                                value={item.value}
+                                                key={item.value}>
+                                                {item.label}    
+                                            </option>
+                                        )
+                                    }
+                                    {/* <option>LDAP</option>
+                                    <option>SSO</option> */}
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div className={style.login_input}>
-                        <label className={style.login_input__label}>
-                            Password
-                        </label>
-                        <div className={style.login_input__field}>
-                            <i className="fa fa-key"></i>
-                            <input 
-                                ref={password}
-                                required
-                                type={passwordVisible ? 'text' : 'password'}
-                                autoComplete="on"/>
-                            <i 
-                                onClick={() => setPasswordVisible(!passwordVisible)}
-                                className={`fa fa-eye ${style.icon_toggleable}`}>
+                        <div className={style.login_input}>
+                            <label className={style.login_input__label}>
+                                Username
+                            </label>
+                            <div className={style.login_input__field}>
+                                <i className="fa fa-user"></i>
+                                <input 
+                                    ref={user}
+                                    required
+                                    type="text"
+                                    autoComplete="on"/>
+                            </div>
+                        </div>
+                        <div className={style.login_input}>
+                            <label className={style.login_input__label}>
+                                Password
+                            </label>
+                            <div className={style.login_input__field}>
+                                <i className="fa fa-key"></i>
+                                <input 
+                                    ref={password}
+                                    required
+                                    type={passwordVisible ? 'text' : 'password'}
+                                    autoComplete="on"/>
+                                <i 
+                                    onClick={() => setPasswordVisible(!passwordVisible)}
+                                    className={`fa fa-eye ${style.icon_toggleable}`}>
 
-                            </i>
+                                </i>
+                            </div>
                         </div>
                     </div>
-                </div>
-                {
-                    isLoginError &&
-                    (
-                        <div className={`${style.login_error} has-text-centered has-text-weight-bold is-uppercase has-text-danger`}>
-                            <span>You have entered invalid credentials</span>
-                        </div>
-                    ) 
-                }
-                <div style={{display: "flex", justifyContent: "center", padding: "1rem 0", marginBottom: "1rem"}}>
-                    <button 
-                        disabled={isLoading}
-                        type="submit"
-                        className={style.login_page_button}>
-                        {
-                            isLoading ? 
-                            (
-                                <span className={style.login_page_button__spinner}>
-                                    <i className="fa fa-spinner"></i>
-                                </span>
-                            ) :
-                            (<span>LOGIN</span>)
-                        }
-                    </button>
-                </div>
-                <br></br>
-            </form>
-        </main>
+                    {
+                        isLoginError &&
+                        (
+                            <div className={`${style.login_error} has-text-centered has-text-weight-bold is-uppercase has-text-danger`}>
+                                <span>You have entered invalid credentials</span>
+                            </div>
+                        ) 
+                    }
+                    <div style={{display: "flex", justifyContent: "center", padding: "1rem 0", marginBottom: "1rem"}}>
+                        <button 
+                            disabled={isLoading}
+                            type="submit"
+                            className={style.login_page_button}>
+                            {
+                                isLoading ? 
+                                (
+                                    <span className={style.login_page_button__spinner}>
+                                        <i className="fa fa-spinner"></i>
+                                    </span>
+                                ) :
+                                (<span>LOGIN</span>)
+                            }
+                        </button>
+                    </div>
+                    <br></br>
+                </form>
+            </main>
+        </Guest>
     )
 }
 

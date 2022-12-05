@@ -47,13 +47,13 @@ function Navbar() {
     return (
         <>
             <nav
-                style={{borderBottom: '1px solid #d3d3d3', background: `${theme.data?.color_theme}`}} 
+                style={{background: `${theme.data?.color_theme}`}} 
                 className={`${style.app_} navbar is-transparent is-fixed-top`}>
                 <div
                     style={{'justifyContent': 'space-between'}} 
                     className="navbar-brand is-flex">
                     <div
-                        style={{backgroundImage: `url('${theme.data?.logo}')`, width: '100px', height: '100%', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: '50%'}}
+                        style={{backgroundImage: `url('${'/logo192.png' || theme.data?.logo}')`, width: '100px', height: '100%', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', backgroundSize: '50%'}}
                         className={`navbar-item is-paddingless is-hidden-mobile`}>
                     </div>
                     <div className="navbar-burger" data-target="navbarExampleTransparentExample">
