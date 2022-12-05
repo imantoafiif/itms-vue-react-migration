@@ -1,0 +1,139 @@
+.agile {
+    &__dots {
+      bottom: 15px;
+      left: 50%;
+      position: absolute;
+      transform: translateX(-50%);
+    }
+  
+    &__dot {
+      button {
+        border: none;
+        background-color: #b5abab;
+        border-radius: 50%;
+        height: 15px;
+        width: 15px;
+        margin: 2px;
+  
+        &:hover {
+          background-color: #fff;
+        }
+      }
+  
+      &--current {
+        button {
+          background-color: #fff;
+        }
+      }
+    }
+  
+    &__arrow {
+      height: 100%;
+      top: 0;
+      width: 80px;
+  
+      &:hover {
+        background-color: rgba(#fff, 0.5);
+  
+        #arrow-svg {
+          fill: #fff;
+        }
+      }
+  
+      &[disabled] {
+        display: none;
+      }
+  
+      #arrow-svg {
+        fill: rgba(#fff, 0.4);
+        height: 25px;
+      }
+  
+      &--next {
+        position: absolute;
+        right: 0;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+      }
+  
+      &--prev {
+        position: absolute;
+        left: 0;
+        cursor: pointer;
+        background: transparent;
+        border: none;
+      }
+    }
+  }
+  
+  .slide {
+    background: {
+      position: center;
+      size: cover;
+    }
+  
+    height: 500px;
+  
+    &:before {
+      background-color: rgba(#000, 0.2);
+      content: "";
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+  }
+  
+  .guidebook {
+    width: 230px;
+    height: 100px;
+    object-fit: cover;
+    border: 3px solid white;
+    border-radius: 10px;
+    background: '#fff';
+  }
+
+  .guidebook_title {
+    font-weight: 500;
+  }
+  
+  li.VueCarousel-dot {
+    padding: 0px !important;
+    margin: 10px !important;
+  }
+  
+  img.item-slide {
+    width: 100%;
+    height: calc(#{100vh} - 52px);
+    object-fit: cover;
+  }
+  
+  .overflowed {
+    overflow: auto;
+  }
+  
+  .node-button {
+    -webkit-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 0px 0px 5px 2px #d3d3d3;
+    border: none;
+    cursor: pointer;
+    &-disable {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      text-align: center;
+      &:hover {
+        cursor: no-drop;
+      }
+    }
+    &:hover {
+      opacity: 0.8;
+    }
+}

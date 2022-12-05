@@ -8,7 +8,7 @@ import { AccountProvider } from "../../user-account";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "../../axios-config";
-
+import style from './Homepage.module.scss';
 
 function Home() {
 
@@ -50,6 +50,8 @@ function Home() {
             children={'test'}> */}
         <PrivateRoute>
             <Carousel
+                emulateTouch={true}
+                swipeable={true}
                 useKeyboardArrows={true}
                 autoPlay={true}
                 dynamicHeight={true}
@@ -74,18 +76,26 @@ function Home() {
             <div className="columns is-vcentered is-centered">
                 {
                     books.map(item => (
-                        <div className="column is-narrow">
+                        <div className="column is-narrow has-text-centered">
                             <a 
                                 target="_black"
                                 href={item.guidebook}>
-                                <div className="">
-
+                                <div style={{'textAlign': 'center'}}>
+                                    <img
+                                        src={item.image}
+                                        style={{'boxShadow': '0px 0px 10px #d3d3d3'}}
+                                        className={`${style.guidebook}`}
+                                    />
+                                </div>
+                                <div className={`${style.guidebook_title} tag is-info is-uppercase`}>
+                                    {item.title}
                                 </div>
                             </a>
                         </div>
                     ))
                 }
             </div>
+            <br/>
         </PrivateRoute>        
        </>
     )
