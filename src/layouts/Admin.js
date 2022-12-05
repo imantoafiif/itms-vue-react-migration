@@ -9,7 +9,7 @@ function Admin() {
             {/* <Navbar></Navbar> */}
             <PrivateRoute>
                 <div
-                    style={{marginTop: '53px'}} 
+                    style={{marginTop: '52px'}} 
                     className="columns">
                     <div
                         style={{borderRight: '1px solid #d3d3d3'}} 

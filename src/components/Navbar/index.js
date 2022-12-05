@@ -101,7 +101,7 @@ function Navbar() {
                         className="navbar-end">
                         <div className={`navbar-item is-hidden-mobile ${style.avatar_container}`}>
                             <img
-                                src={user.user?.avatar?.avatar} 
+                                src={user.user?.avatar.avatar} 
                                 className={`is-rounded`}
                                 style={{'objectFit': 'cover', 'objectPosition': 'top', 'width': '32px', 'height': '32px', 'borderRadius': '50%', 'maxHeight': 'unset'}}
                                 onError={e => {

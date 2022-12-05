@@ -68,11 +68,13 @@ function Home() {
                 </div>
             </Carousel>
             <br></br>
-            <p class="title is-3 has-text-centered">Guide Book</p>
+            <p className="title is-3 has-text-centered">Guide Book</p>
             <div className="columns is-vcentered is-centered">
                 {
                     books.map(item => (
-                        <div className="column is-narrow has-text-centered">
+                        <div
+                            key={item.object_identifier}
+                            className="column is-narrow has-text-centered">
                             <a 
                                 target="_black"
                                 href={item.guidebook}>
