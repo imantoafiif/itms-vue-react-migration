@@ -8,9 +8,9 @@ import style from './Navbar.module.scss'
 
 function Navbar() {
 
+    const navigate = useNavigate()
     const user = useContext(AccountProvider)
     const theme = useContext(Theme)
-    const navigate = useNavigate()
     const [menus, setMenu] = useState([])
 
     const logout = () => {
@@ -96,7 +96,9 @@ function Navbar() {
                     }
                     </div>
 
-                    <div className="navbar-end">
+                    <div
+                        style={{marginRight: "15px"}} 
+                        className="navbar-end">
                         <div className={`navbar-item is-hidden-mobile ${style.avatar_container}`}>
                             <img
                                 src={user.user?.avatar?.avatar} 
@@ -108,17 +110,40 @@ function Navbar() {
                                 }}    
                             />
                         </div>
-                        <div className="navbar-item">
-                            <div className="field is-grouped">
-
-                                <p className="control">
-                                    <a  
-                                        onClick={logout}>
-                                        <strong>LOGOUT</strong>
-                                    </a>
-                                </p>
+                        <div className="navbar-item has-dropdown is-hoverable">
+                            <a className="navbar-link has-text-white">
+                                {user.user?.personal.complete_name}
+                            </a>
+                            <div className="navbar-dropdown is-right is-boxed">
+                                <a 
+                                    onClick={logout}
+                                    className="navbar-item">
+                                    Logout
+                                </a>
                             </div>
                         </div>
+                        <Link 
+                            to="/mail"
+                            className="navbar-item has-text-white"> 
+                            <i className="fa fa-lg fa-regular fa-envelope"
+                                aria-hidden="true">
+                            </i>
+                            {/* <span
+                                style={{"position": "absolute", "bottom": "25px", "left": "25px"}} 
+                                className="tag badge is-rounded is-danger">
+                                1
+                            </span> */}
+                        </Link>
+                        <Link 
+                            to="/notifications"
+                            className="navbar-item has-text-white"> 
+                            <i className="fa fa-lg fa-regular fa-bell"
+                                aria-hidden="true">
+                            </i>
+                            <span className={`${style.notif_tag} tag badge is-rounded is-danger`}>
+                                {user.user?.notification.length}
+                            </span>
+                        </Link>
                     </div>
                 </div>
             </nav>
