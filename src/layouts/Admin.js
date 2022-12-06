@@ -7,7 +7,8 @@ function Admin() {
     return (
         <>
             {/* <Navbar></Navbar> */}
-            <PrivateRoute>
+            <PrivateRoute
+                admin_only={true}>
                 <div
                     style={{marginTop: '52px'}} 
                     className="columns">

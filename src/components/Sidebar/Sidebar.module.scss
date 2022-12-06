@@ -84,13 +84,14 @@ $sidebar: #fff;
     display: inline-block;
   }
 
-  &-menu-parent {
+  &_menu_parent {
     -webkit-transition: background-color .3s;
     transition: background-color .3s;
     padding: 10px 15px;
     background-color: $sidebar;
+    border-bottom: 1px solid #d3d3d3;
 
-    &-active {
+    &_active {
       // background-color: $active;
     }
 
@@ -100,7 +101,7 @@ $sidebar: #fff;
 
   }
 
-  &-icon-space {
+  &_icon_space {
     font-size: 18px;
     overflow: visible;
     max-width: 15%;
@@ -112,7 +113,7 @@ $sidebar: #fff;
   padding: 30px;
   margin: auto;
   text-align: center;
-  background-image: url('https://i.picsum.photos/id/473/536/354.jpg?hmac=J1wyEFm8RVLcE556ALDnBLbmKLpbk-cnEPogF46eUgg');
+  background-image: url('https://media.pitchfork.com/photos/62a8fad9dde1c822a75c1429/3:2/w_1500,h_1000,c_limit/Alice%20in%20Chains%20-%20Dirt.jpg');
   background-size: cover;
   text-align: center;
   background-color: rgba(0, 0, 0, .3);

@@ -141,8 +141,8 @@ function Login() {
                                 <select
                                     required 
                                     onChange={e => {
-                                        user.current.value = ''
-                                        password.current.value = ''
+                                        // user.current.value = ''
+                                        // password.current.value = ''
                                         setSelectedMethod(e.target.value)
                                     }}>
                                     {

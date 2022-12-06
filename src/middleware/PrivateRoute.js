@@ -3,9 +3,9 @@ import { Navigate } from 'react-router-dom'
 import checkvalidity from '../helper/check-validity'
 import { AccountProvider } from '../user-account'
 
-const PrivateRoute = props => {
+const PrivateRoute = ({ admin_only = false, children }) => {
 
-    const account = useContext(AccountProvider)
+    const user = useContext(AccountProvider)
     const session = localStorage.getItem('auth.token')
 
     if(!checkvalidity(session)) {
@@ -13,9 +13,21 @@ const PrivateRoute = props => {
         return <Navigate to='/login'></Navigate>
     }
 
+    if(admin_only) {
+        const is_admin = user.user?.user_role.find(item => {
+            return (
+                item.role_code.role_code === 'SADMNDYA' ||
+                item.role_code.role_code === 'ADMNDYA' || 
+                item.role_code.role_code === 'ADMTLNNDYA' ||
+                item.role_code.role_code === 'ADMCRRNDYA'
+            )
+        })
+        if(!is_admin) return <Navigate to='/homepage'></Navigate>
+    }
+
     return (
         <>
-            { props.children }
+            { children }
         </>
     )
 }
