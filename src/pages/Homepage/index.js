@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import PrivateRoute from "../../middleware/PrivateRoute";
-import { increment } from '../../store/slices/sessionSlice';
-import WithNav from "../../layouts/WithNav";
 import { useDispatch, useSelector } from "react-redux";
 import { getBusinessCode, getSession, todayDate } from "../../helper";
-import { AccountProvider } from "../../user-account";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import axios from "../../axios-config";
@@ -12,11 +9,9 @@ import style from './Homepage.module.scss';
 
 function Home() {
 
-    const user = useContext(AccountProvider)
     const [books, setBooks] = useState([])
     const dispatch = useDispatch()
     // const session = useSelector(state => state.user.user)
-    const session = getSession()
     console.log('s', getSession())
 
     useEffect(() => {
@@ -41,9 +36,6 @@ function Home() {
     }
 
     return (
-       <>
-        {/* <Default    
-            children={'test'}> */}
         <PrivateRoute>
             <Carousel
                 emulateTouch={true}
@@ -94,8 +86,7 @@ function Home() {
                 }
             </div>
             <br/>
-        </PrivateRoute>        
-       </>
+        </PrivateRoute>    
     )
 }
 
