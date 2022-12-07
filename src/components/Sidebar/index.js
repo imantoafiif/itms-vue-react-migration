@@ -9,12 +9,17 @@ function Sidebar() {
 
     const user = useContext(AccountProvider)
     const [menus, setMenus] = useState([])
+    const [expand, setExpand] = useState()
     var username = null
 
     useEffect(() => {
         if(!user) return
         getMenu()
     }, [user])
+
+    useEffect(() => {
+        console.log('menus', menus)
+    }, [menus])
 
     const getMenu = async () => {
         await axios.get(`/ldap/api/rbac/menu-parent`, {
@@ -96,7 +101,15 @@ function Sidebar() {
                 <div style={{paddingBottom: '52px'}}>
                     {
                         menus.map(item => (
-                            <Link className="sidebar-men has-text-dark">
+                            <Link
+                                onClick={e => {
+                                    if(item.menu_child.length > 0) {
+                                        setExpand(item.object_identifier)
+                                    }
+                                }}
+                                to={item.menu_code.menu_url}
+                                key={item.object_identifier} 
+                                className="sidebar-menu has-text-dark">
                                 <div className={`${style.sidebar_menu_parent} ${style.sidebar_menu_parent_active}`}>
                                     <div className="columns is-vcentered">
                                         <div className={`column ${style.sidebar_icon_space}`}>
@@ -107,11 +120,28 @@ function Sidebar() {
                                                 {item.menu_code.menu_name.toUpperCase()}
                                             </span>
                                         </div>
-                                        <div className="column is-2 has-text-centered">
-                                            <i 
-                                                style={{'color': 'rgba(120, 120, 120, .5)'}}
-                                                className="fa fa-caret-down">
-                                            </i>
+                                        {
+                                            item.menu_child.length > 0 && 
+                                            (
+                                                <div className="column is-2 has-text-centered">
+                                                    <i 
+                                                        style={{'color': 'rgba(120, 120, 120, .5)'}}
+                                                        className="fa fa-caret-down">
+                                                    </i>
+                                                </div>
+                                            )
+                                        }
+                                    </div>
+                                </div>
+                                <div className="sidebar-child">
+                                    <div className="sidebar-menu-child">
+                                        <div className={`${style.sidebar_menu_child_bottom}`}>
+                                            <div className={`columns is-marginless is-paddingless ${style.sidebar_menu_child}`}>
+                                                <div className={`column ${style.sidebar_icon_space}`}></div>
+                                                <div className="column is-fullwidth">
+                                                    <p>abc</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

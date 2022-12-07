@@ -11,12 +11,12 @@ $sidebar: #fff;
   overflow: auto;
   background: $sidebar;
 
-  &-menu-child {
+  &_menu_child {
     -webkit-transition: background-color .3s;
     transition: background-color .3s;
     color: #696969;
 
-    &-bottom {
+    &_bottom {
       border-bottom: 1px solid rgba(200, 200, 200, .4);
     }
 
