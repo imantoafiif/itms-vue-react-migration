@@ -17,10 +17,6 @@ function Sidebar() {
         getMenu()
     }, [user])
 
-    useEffect(() => {
-        console.log('menus', menus)
-    }, [menus])
-
     const getMenu = async () => {
         await axios.get(`/ldap/api/rbac/menu-parent`, {
             params: {
@@ -104,6 +100,10 @@ function Sidebar() {
                             <Link
                                 onClick={e => {
                                     if(item.menu_child.length > 0) {
+                                        if(expand == item.object_identifier) {
+                                            setExpand(null)
+                                            return
+                                        }
                                         setExpand(item.object_identifier)
                                     }
                                 }}
@@ -133,18 +133,29 @@ function Sidebar() {
                                         }
                                     </div>
                                 </div>
-                                <div className="sidebar-child">
-                                    <div className="sidebar-menu-child">
-                                        <div className={`${style.sidebar_menu_child_bottom}`}>
-                                            <div className={`columns is-marginless is-paddingless ${style.sidebar_menu_child}`}>
-                                                <div className={`column ${style.sidebar_icon_space}`}></div>
-                                                <div className="column is-fullwidth">
-                                                    <p>abc</p>
+                                {
+                                    expand == item.object_identifier &&
+                                    (
+                                        item.menu_child.map(item => (
+                                            <Link 
+                                                to={item.menu_child.menu_url}
+                                                key={item.object_identifier}
+                                                className="sidebar-child">
+                                                <div className="sidebar-menu-child">
+                                                    <div className={`${style.sidebar_menu_child_bottom}`}>
+                                                        <div className={`columns is-marginless is-paddingless ${style.sidebar_menu_child}`}>
+                                                            <div className={`column ${style.sidebar_icon_space}`}></div>
+                                                            <div className="column is-fullwidth">
+                                                                <p>{item.menu_child.menu_name}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                            </Link>
+                                        ))
+                                    )
+                                }
+                                
                             </Link>
                         ))
                     }
