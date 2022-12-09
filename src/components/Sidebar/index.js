@@ -94,7 +94,7 @@ function Sidebar() {
                         <b>{username}</b>
                     </p>
                 </div>
-                <div>
+                <div style={{paddingBottom: '52px'}}>
                     {
                         menus.map(item => (
                             <Link

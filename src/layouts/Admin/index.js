@@ -13,12 +13,11 @@ function Admin() {
                 <div
                     style={{marginTop: '52px'}} 
                     className="columns">
-                    <div className={`${style.sidebar} column is-2 pt-0`}>
-                        <Sidebar></Sidebar>
+                    <div className={`${style.sidebar} column is-paddingless`}>
+                        <Sidebar/>
                     </div>
                     <div className={`${style.content} column is-paddingless`}>
                         <Outlet/>
-                        {/* {props.children} */}
                     </div>
                 </div>
             </PrivateRoute>
