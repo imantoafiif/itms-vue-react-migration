@@ -94,7 +94,7 @@ function Sidebar() {
                         <b>{username}</b>
                     </p>
                 </div>
-                <div style={{paddingBottom: '52px'}}>
+                <div>
                     {
                         menus.map(item => (
                             <Link
@@ -107,7 +107,7 @@ function Sidebar() {
                                         setExpand(item.object_identifier)
                                     }
                                 }}
-                                to={item.menu_code.menu_url}
+                                to={item.menu_child.length > 0 ? item.menu_code.menu_url : `/${item.menu_code.menu_url}`}
                                 key={item.object_identifier} 
                                 className="sidebar-menu has-text-dark">
                                 <div className={`${style.sidebar_menu_parent} ${style.sidebar_menu_parent_active}`}>
@@ -138,7 +138,7 @@ function Sidebar() {
                                     (
                                         item.menu_child.map(item => (
                                             <Link 
-                                                to={item.menu_child.menu_url}
+                                                to={item.menu_child.length > 0 ? item.menu_child.menu_url : `/${item.menu_child.menu_url}`}
                                                 key={item.object_identifier}
                                                 className="sidebar-child">
                                                 <div className="sidebar-menu-child">

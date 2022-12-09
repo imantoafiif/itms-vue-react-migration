@@ -10,7 +10,6 @@ function AdminPage() {
     console.log('counter', counter)
 
     return (
-       <>
         <section className="hero is-fullheight-with-navbar has-text-centered">
             <div className="hero-body">
                 <div 
@@ -26,7 +25,6 @@ function AdminPage() {
                 </div>
             </div>
         </section>
-       </>
     )
 }
 

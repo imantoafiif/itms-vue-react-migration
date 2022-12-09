@@ -1,7 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import PrivateRoute from "../middleware/PrivateRoute";
+import Sidebar from "../../components/Sidebar";
+import PrivateRoute from "../../middleware/PrivateRoute";
+import style from './Admin.module.scss'
 
 function Admin() {
     return (
@@ -12,12 +13,10 @@ function Admin() {
                 <div
                     style={{marginTop: '52px'}} 
                     className="columns">
-                    <div
-                        style={{borderRight: '1px solid #d3d3d3'}} 
-                        className="column is-2 pt-0">
+                    <div className={`${style.sidebar} column is-2 pt-0`}>
                         <Sidebar></Sidebar>
                     </div>
-                    <div className="column">
+                    <div className={`${style.content} column is-paddingless`}>
                         <Outlet/>
                         {/* {props.children} */}
                     </div>
