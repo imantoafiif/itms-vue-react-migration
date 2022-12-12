@@ -1,0 +1,38 @@
+.base-breadcrumbs {
+    display: block;
+    width: 100%;
+    height: auto;
+  
+    &__list {
+    }
+  
+    &__list__item {
+      display: inline-block;
+      list-style-type: none;
+  
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #3273dc;
+  
+      &:not(:last-child) {
+        color: #b0bec5;
+  
+        > a::after {
+          content: "/";
+          display: inline-block;
+          margin: 0 0.5rem;
+          // color: currentColor;
+        }
+      }
+  
+      > a {
+        display: inline-block;
+        width: 100%;
+        height: auto;
+  
+        // color: currentColor;
+      }
+    }
+  }

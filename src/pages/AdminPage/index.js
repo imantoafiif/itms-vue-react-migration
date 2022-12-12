@@ -1,32 +1,45 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { counterSlice } from "../../store/slices/sessionSlice";
+import Breadcrumbs from "../../components/Breadcrumbs";
+import Search from "../../components/Search";
+import Text from "../../components/Search/Text";
+
 // import WithNav from "../layouts/WithNav";
 
 function AdminPage() {
 
     const counter = useSelector(counterSlice)
-
-    console.log('counter', counter)
+    const crumbs = [
+        { label: 'Home', to: '/', key: 'HOME' },
+        { label: 'Dashboard', to: '#', key: 'DSHBRD' },
+      ]
 
     return (
-       <>
-        <section className="hero is-fullheight-with-navbar has-text-centered">
-            <div className="hero-body">
-                <div 
-                    style={{width: '100%'}}
-                    className="">
-                <p className="title">
-                    Admin
-                </p>
-                <p className="subtitle">
-                    This page is for admin only
-                </p>
-                <p>{ counter }</p>
+        <section style={{margin: '24px'}}>
+            <div className="columns is-multiline is-marginless is-paddingless">
+                <div className="column is-full">
+                    <h1 className="title is-3">
+                    Dashboard
+                    </h1>
+                </div>
+                <div className="column is-full">
+                    <Breadcrumbs items={crumbs} />
+                </div>
+                <div className="column is-full">
+                    <Search>
+                        <Text
+                            id={0}
+                            placeholder="Search 1">
+                        </Text>
+                        <Text
+                            id={1}
+                            placeholder="Search 2">
+                        </Text>
+                    </Search>
                 </div>
             </div>
         </section>
-       </>
     )
 }
 
