@@ -15,6 +15,10 @@ function AdminPage() {
         { label: 'Dashboard', to: '#', key: 'DSHBRD' },
       ]
 
+    const onSearch = values => {
+        console.log('aku terjebak dalam kehidupan', values)
+    }
+
     return (
         <section style={{margin: '24px'}}>
             <div className="columns is-multiline is-marginless is-paddingless">
@@ -27,13 +31,13 @@ function AdminPage() {
                     <Breadcrumbs items={crumbs} />
                 </div>
                 <div className="column is-full">
-                    <Search>
+                    <Search onSearch={onSearch}>
                         <Text
-                            id={0}
+                            index={0}
                             placeholder="Search 1">
                         </Text>
                         <Text
-                            id={1}
+                            index={1}
                             placeholder="Search 2">
                         </Text>
                     </Search>
