@@ -13,6 +13,7 @@ const Text = ({ placeholder, index }) => {
         set(values)
     }, [text])
 
+    // on reset
     useEffect(() => {
         if(!data[index].value) {
             ref.current.value = ''

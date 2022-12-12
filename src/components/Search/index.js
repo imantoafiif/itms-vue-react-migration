@@ -45,7 +45,7 @@ const Search = ({ children, onSearch }) => {
                                     <span className='tag'>
                                         <a onClick={() => setToggleFilter(!toggleFilter)}>
                                             <span className='mr-2'>Advanced Filters</span>
-                                            <i className='fa fa-caret-down'></i>
+                                            <i className={`fa fa-caret-${toggleFilter ? 'up' : 'down'}`}></i>
                                         </a>
                                     </span>
                                 </div>

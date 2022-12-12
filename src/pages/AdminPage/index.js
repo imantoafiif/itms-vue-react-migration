@@ -40,6 +40,10 @@ function AdminPage() {
                             index={1}
                             placeholder="Search 2">
                         </Text>
+                        <Text
+                            index={2}
+                            placeholder="Search 3">
+                        </Text>
                     </Search>
                 </div>
             </div>
