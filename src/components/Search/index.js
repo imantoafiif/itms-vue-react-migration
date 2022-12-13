@@ -77,7 +77,6 @@ const Search = ({ children, onSearch }) => {
                                     children.map(() => ({ value: null }))
                                     : [{ value: null }]
                                 }))
-                                console.log('sadas', children.ref)
                             }}
                             className="button">
                             Reset

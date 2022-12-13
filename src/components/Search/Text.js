@@ -30,11 +30,11 @@ const Text = ({ placeholder, index }) => {
                     type="text" 
                     placeholder={`${placeholder}`}/>
             </p>
-            <p className="control">
+            {/* <p className="control">
                 <a className="button is-static">
                     <i className='fa fa-search'></i>
                 </a>
-            </p>
+            </p> */}
         </div>
     )
 }
