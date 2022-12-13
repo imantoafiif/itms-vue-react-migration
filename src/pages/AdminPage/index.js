@@ -4,6 +4,7 @@ import Search from "../../components/Search";
 import Text from "../../components/Search/Text";
 import Selector from "../../components/Search/Selector";
 import axios from "../../axios-config";
+import Matrix from "../../components/Matrix";
 
 // import WithNav from "../layouts/WithNav";
 
@@ -88,6 +89,9 @@ function AdminPage() {
                             })
                         }
                     </Search>
+                </div>
+                <div className="column is-full">
+                    <Matrix/>
                 </div>
             </div>
         </section>
