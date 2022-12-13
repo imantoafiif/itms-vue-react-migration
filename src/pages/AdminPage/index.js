@@ -35,6 +35,8 @@ function AdminPage() {
             if(Array.isArray(r.data.data) && r.data.data.length) {
                 let items = [...searchItems]
                 items[3] = { 
+                    type: 'selector', 
+                    placeholder: 'Search 4', 
                     isLoading: false, 
                     options: r.data.data.map(item => ({
                         value: item.role_code,
