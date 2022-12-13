@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { counterSlice } from "../../store/slices/sessionSlice";
 import Breadcrumbs from "../../components/Breadcrumbs";
 import Search from "../../components/Search";
 import Text from "../../components/Search/Text";
@@ -11,12 +9,16 @@ import axios from "../../axios-config";
 
 function AdminPage() {
 
-    const [options, setOptions] = useState(null)
-    const counter = useSelector(counterSlice)
     const crumbs = [
         { label: 'Home', to: '/', key: 'HOME' },
         { label: 'Dashboard', to: '#', key: 'DSHBRD' },
-      ]
+    ]
+    const [searchItems, setSearchItems] = useState([
+        { type: 'text', placeholder: 'Search 1' },
+        { type: 'text', placeholder: 'Search 2' },
+        { type: 'text', placeholder: 'Search 3' },
+        { type: 'selector', placeholder: 'Search 4', isLoading: true, options: [] }
+    ])
 
     const onSearch = values => {
         console.log('aku terjebak dalam kehidupan', values)
@@ -31,10 +33,15 @@ function AdminPage() {
         })
         .then(r => {
             if(Array.isArray(r.data.data) && r.data.data.length) {
-                setOptions(r.data.data.map(item => ({
-                    value: item.role_code,
-                    label: item.role_name,
-                })))
+                let items = [...searchItems]
+                items[3] = { 
+                    isLoading: false, 
+                    options: r.data.data.map(item => ({
+                        value: item.role_code,
+                        label: item.role_name,
+                    })) 
+                }
+                setSearchItems(items)
             }
         })
     }
@@ -42,10 +49,6 @@ function AdminPage() {
     useEffect(() => {
         fetchSelector()
     }, [])
-
-    useEffect(() => {
-        console.log('options', options)
-    }, [options])
 
     return (
         <section style={{margin: '24px'}}>
@@ -60,24 +63,28 @@ function AdminPage() {
                 </div>
                 <div className="column is-full">
                     <Search onSearch={onSearch}>
-                        <Text
-                            index={0}
-                            placeholder="Search 1">
-                        </Text>
-                        <Text
-                            index={1}
-                            placeholder="Search 2">
-                        </Text>
-                        <Text
-                            index={2}
-                            placeholder="Search 3">
-                        </Text>
-                        <Selector
-                            index={3}
-                            isLoading={!options}
-                            placeholder="Search 4"
-                            options={options}>
-                        </Selector>
+                        {
+                            searchItems.map((item, key) => {
+                                switch(item.type) {
+                                    case 'text' :
+                                    return (
+                                        <Text 
+                                            index={key} 
+                                            placeholder={item.placeholder}>
+                                        </Text>
+                                    )
+                                    case 'selector' : 
+                                    return (
+                                        <Selector 
+                                            index={key} 
+                                            isLoading={item.isLoading} 
+                                            placeholder={item.placeholder} 
+                                            options={item.options}>    
+                                        </Selector>
+                                    )
+                                }
+                            })
+                        }
                     </Search>
                 </div>
             </div>
