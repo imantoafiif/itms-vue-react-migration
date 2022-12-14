@@ -30,7 +30,8 @@ const Search = ({ children, onSearch }) => {
             <form 
                 method='post'
                 onSubmit={submit}  
-                className='box'>
+                className='box'
+                style={{border: '1px solid #d3d3d3'}}>
                 <div className='columns is-vcentered'>
                     <div className='column'>
                         <h4 className="title is-4">Search Filters</h4>
