@@ -1,28 +1,94 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SwipeableViews from 'react-swipeable-views';
 import { autoPlay } from 'react-swipeable-views-utils';
 import './Matrix.scss'
+import axios from "../../axios-config";
+import { getBusinessCode, todayDate } from '../../helper';
+import { ReactSortable } from "react-sortablejs";
 
-const Matrix = () => {
+const Matrix = ({ allow_discretion }) => {
 
-  const classes = [
-    { value: '1', label: 'label 1' }, 
-    { value: '2', label: 'label 2' }, 
-    { value: '3', label: 'label 3' }, 
-    { value: '4', label: 'label 4' }, 
-    { value: '5', label: 'label 5' }, 
-    { value: '6', label: 'label 6' }, 
-    { value: '7', label: 'label 7' }, 
-    { value: '8', label: 'label 8' }, 
-    { value: '9', label: 'label 9' }, 
-  ]
+  const [clusters, setClusters] = useState([
+    { cluster: { id: 5, label: null }, data: null }, 
+    { cluster: { id: 8, label: null }, data: null }, 
+    { cluster: { id: 9, label: null }, data: null }, 
+    { cluster: { id: 3, label: null }, data: null }, 
+    { cluster: { id: 6, label: null }, data: null }, 
+    { cluster: { id: 7, label: null }, data: null }, 
+    { cluster: { id: 1, label: null }, data: null }, 
+    { cluster: { id: 2, label: null }, data: null }, 
+    { cluster: { id: 4, label: null }, data: null }, 
+  ])
 
   const [index, setIndex] = useState(0)
   const Swipeable = autoPlay(SwipeableViews);
 
-  const handleChange = index => {
-    setIndex(index)
+  const handleChange = event => {
+    let t_clusters = [...clusters]
+
+    t_clusters[parseInt(event.to.id)].data.data.splice(
+      event.newIndex, 
+      0, 
+      t_clusters[parseInt(event.from.id)].data.data[event.oldIndex]
+    )
+
+    t_clusters[parseInt(event.from.id)].data.data.splice(event.oldIndex, 1)
+
+    setClusters(t_clusters)
   }
+
+  // const onEnd = updated => {
+  //   console.log('onEnd', updated.from.id, updated.to.id)
+  // }
+
+  const initPools = async () => {
+    for (const [index, pool] of clusters.entries()) {
+      await axios.get(`/tms/api/talent-pool`, {
+        params: {
+           begin_date_lte: todayDate(),
+           end_date_gte: todayDate(),
+           business_code: getBusinessCode(),
+           per_page: 9999,
+           include: 'personnel_number,avatar',
+           event_code: '*',
+           talent_cluster_id: pool.cluster.id,
+        }
+      }).then(r => {
+        let t_pool = [...clusters]
+        if(Array.isArray(r.data.data)) {
+          t_pool[index].data = r.data
+          setClusters(t_pool)
+          console.log('clusters', clusters)
+          return
+        }
+        t_pool[index].data = []
+        setClusters(t_pool)
+        console.log('clusters', clusters)
+      })
+    }
+  }
+
+  const fetchClassifications = async () => {
+    const mapping = [2, 1, 5, 4, 0, 8, 3, 7, 6]
+    await axios.get('/ldap/api/objects', {
+      params: {
+        'object_type[]': '9GRID',
+        'business_code': getBusinessCode(),
+        'order[STEXT]': 'desc'
+      }
+    }).then(r => {
+      let t_pool = [...clusters]
+      for(const [index, map] of mapping.entries()) {
+        t_pool[map].cluster.label = r.data.data[index].value
+      }
+      setClusters(t_pool)
+    })
+  }
+
+  useEffect(() => {
+    fetchClassifications()
+    initPools()
+  }, [])
 
   return (
     <div className='columns is-multiline'>
@@ -39,8 +105,9 @@ const Matrix = () => {
           <div className='matrix-wrapper'>
             <div className='columns is-multiline is-mobile'>
               {
-                classes.map((item, key) => (
+                clusters.map((item, key) => (
                   <div 
+                    key={key}
                     align="center"
                     className='column is-one-third wrapper-child'>
                     <div className='columns is-multiline is-vcentered'>
@@ -49,66 +116,64 @@ const Matrix = () => {
                           style={{'boxShadow': '0px 0px 7px 3px rgba(180, 180, 180, .3)'}} 
                           className='tag is-rounded'>
                           <a className='label is-uppercase is-size-7'>
-                            {item.value} - {item.label}
+                            {item.cluster.id} - {item.cluster.label}
                           </a>
                         </span>
                       </div>
                       <div
-                        style={{padding: '40px'}} 
+                        style={{padding: '40px', height: '432px', overflowY: 'auto', overflowX: 'hidden'}} 
                         className='column is-full'>
-                        <Swipeable
-                          enableMouseEvents
-                          index={index}
-                          onChangeIndex={handleChange}>
-                          <div className='columns is-multiline is-mobile is-vcentered is-paddingless'>
-                            {
-                              [1, 2, 3, 4, 5, 6, 7, 8, 9].map(item => (
-                                <div
-                                  style={{'padding': '2px', 'marginTop': '10px'}} 
-                                  className='column is-one-third'>
-                                  <img
-                                      className='avatar'
-                                      src='/img/user_avatar.png'
-                                      style={{'border': '3px solid #d3d3d3', 'objectFit': 'cover'}}
-                                  />
-                                  <br/>
-                                  <span className='tag is-rounded'>
-                                    <p style={{'fontSize': '12px', 'color': '#000'}}>
-                                      Name
-                                    </p>
-                                  </span>
-                                </div>
-                              ))
-                            }
-                          </div>
-                          <div className='columns is-multiline is-mobile is-vcentered is-paddingless'>
-                            {
-                              [1, 2, 3, 4, 5].map(item => (
-                                <div
-                                  style={{'padding': '2px', 'marginTop': '10px'}} 
-                                  className='column is-one-third'>
-                                  <img
-                                      className='avatar'
-                                      src='/img/user_avatar.png'
-                                      style={{'border': '3px solid #d3d3d3', 'objectFit': 'cover'}}
-                                  />
-                                  <br/>
-                                  <span className='tag is-rounded'>
-                                    <p style={{'fontSize': '12px', 'color': '#000'}}>
-                                      Name
-                                    </p>
-                                  </span>
-                                </div>
-                              ))
-                            }
-                          </div>
-                        </Swipeable>
+                        {/* <div className='columns is-multiline is-mobile is-vcentered is-paddingless'>
+                          
+                        </div> */}
+                        {
+                            item.data ? (
+                              <ReactSortable
+                                id={key}
+                                className="columns is-multiline is-mobile is-vcentered is-paddingless" 
+                                tag="div"
+                                list={clusters}
+                                setList={() => {}}
+                                group="shared"
+                                animation={200}
+                                delayOnTouchStart={true}
+                                delay={2}
+                                onEnd={updated => handleChange(updated)}
+                                disabled={!item.data}
+                                style={{height: '100%'}}> 
+                                {
+                                  item.data.data.map((t, key) => (
+                                    <div
+                                      key={key}
+                                      style={{'padding': '2px', 'marginTop': '10px'}} 
+                                      className='column is-one-third'>
+                                      <img
+                                          className='avatar'
+                                          src='/img/user_avatar.png'
+                                          style={{'border': '3px solid #d3d3d3', 'objectFit': 'cover'}}
+                                      />
+                                      <br/>
+                                      <span className='tag is-rounded'>
+                                        <p style={{'fontSize': '12px', 'color': '#000'}}>
+                                          {t.personnel_number.complete_name.split(" ")[0]}
+                                        </p>
+                                      </span>
+                                    </div>
+                                  ))
+                                }
+                              </ReactSortable>
+                            ) : 
+                            <center>Loading</center>
+                          }
                       </div>
                       <div className='column is-full'>
                         <span 
                           style={{'boxShadow': '0px 0px 7px 3px rgba(180, 180, 180, .3)'}}
                           className='tag is-rounded'>
-                          Buffer 10
+                          <strong>
+                            {item.data?.data.length || 0}
+                            &nbsp;Buffer{item.data ? (item.data.meta.pagination.total > 1 ? 's' : '') : ''}
+                          </strong>
                         </span>
                       </div>
                     </div>
