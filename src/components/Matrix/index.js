@@ -6,7 +6,7 @@ import axios from "../../axios-config";
 import { getBusinessCode, todayDate } from '../../helper';
 import { ReactSortable } from "react-sortablejs";
 
-const Matrix = ({ allow_discretion }) => {
+const Matrix = ({ allow_discretion = true }) => {
 
   const [clusters, setClusters] = useState([
     { cluster: { id: 5, label: null }, data: null }, 
@@ -25,25 +25,19 @@ const Matrix = ({ allow_discretion }) => {
 
   const handleChange = event => {
     let t_clusters = [...clusters]
-
     t_clusters[parseInt(event.to.id)].data.data.splice(
       event.newIndex, 
       0, 
       t_clusters[parseInt(event.from.id)].data.data[event.oldIndex]
     )
-
     t_clusters[parseInt(event.from.id)].data.data.splice(event.oldIndex, 1)
-
     setClusters(t_clusters)
+    console.log(clusters)
   }
 
-  // const onEnd = updated => {
-  //   console.log('onEnd', updated.from.id, updated.to.id)
-  // }
-
-  const initPools = async () => {
+  const initPools = () => {
     for (const [index, pool] of clusters.entries()) {
-      await axios.get(`/tms/api/talent-pool`, {
+      axios.get(`/tms/api/talent-pool`, {
         params: {
            begin_date_lte: todayDate(),
            end_date_gte: todayDate(),
@@ -123,9 +117,6 @@ const Matrix = ({ allow_discretion }) => {
                       <div
                         style={{padding: '40px', height: '432px', overflowY: 'auto', overflowX: 'hidden'}} 
                         className='column is-full'>
-                        {/* <div className='columns is-multiline is-mobile is-vcentered is-paddingless'>
-                          
-                        </div> */}
                         {
                             item.data ? (
                               <ReactSortable
@@ -139,7 +130,6 @@ const Matrix = ({ allow_discretion }) => {
                                 delayOnTouchStart={true}
                                 delay={2}
                                 onEnd={updated => handleChange(updated)}
-                                disabled={!item.data}
                                 style={{height: '100%'}}> 
                                 {
                                   item.data.data.map((t, key) => (
