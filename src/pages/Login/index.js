@@ -55,36 +55,6 @@ function Login() {
         }
 
         let sso = null
-        if(selectedMethod === 'SSO') {
-            console.log(selectedMethod)
-            sso = await axios.get(`https://aktivis-api.pnm.co.id/v1/sso/webservice/login`, {
-                params: {
-                    user: user.current.value,
-                    pass: password.current.value,
-                    app_code: 'ITMS',
-                },
-                auth: {
-                    username: 'event',
-                    password: 'event',
-                }
-            })
-            .then(r => {
-                if(r.data.login[0].response === 'TRUE') {
-                    return r.data.login[0]
-                }
-                setIsLoginError(true)
-                return null
-            })
-            .catch(e => {
-                setIsLoginError(true)
-                console.log(e)
-            })
-
-            if(!sso) {
-                setLoading(false)
-                return
-            }
-        }
 
         axios.post('/ldap/api/auth/login', {
             application_id: process.env.REACT_APP_ID,
