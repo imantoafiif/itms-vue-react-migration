@@ -22,32 +22,30 @@ function Home() {
     const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
     const [books, setBooks] = useState([])
     const dispatch = useDispatch()
-    // const session = useSelector(state => state.user.user)
-    console.log('s', getSession())
 
     const getBooks = async () => {
-        // let temp_books = []
-        // let is_fetching = true
-        // while(is_fetching) {
-            
-        // }
+        let temp_books = []
+        let fetch = true
 
+        while(fetch) {
+            await axios.get(`/hcis/api/guide-book`, {
+                params: {
+                    business_code: getBusinessCode(),
+                    end_date_gte: todayDate(),
+                    per_page: 5,
+                    page: temp_books.length + 1
+                }
+            }).then(r => {
+                if(Array.isArray(r.data.data) && r.data.data.length) {
+                    temp_books.push(r.data.data)
+                }
+                if(temp_books.length == r.data.meta.pagination.total_pages) {
+                   fetch = false
+                }
+            })
+        }
 
-
-        // await axios.get(`/hcis/api/guide-book`, {
-        //     params: {
-        //         business_code: getBusinessCode(),
-        //         end_date_gte: todayDate(),
-        //     }
-        // })
-        // .then(r => {
-        //     if(Array.isArray(r.data.data) && r.data.data.length) {
-        //         setBooks(r.data.data)
-        //     }
-        // })
-        // .catch(e => {
-        //     console.log(e)
-        // })
+        setBooks(temp_books)
     }
 
     useEffect(() => {
@@ -84,139 +82,41 @@ function Home() {
             <div style={{position: 'relative'}}>
                 <AutoPlaySwipeableViews
                     enableMouseEvents>
-                    <div style={styles.slide}>
-                        <div className="columns is-vcentered is-centered">
-                            {
-                                [1, 2, 3, 4, 5].map(item => (
-                                    <div
-                                        className="column is-narrow has-text-centered">
-                                        <a
-                                            target="_blank">
-                                            <div style={{textAlign: 'center'}}>
-                                                <img
-                                                    src="/img/user_avatar.png"
-                                                    style={{'boxShadow': '0px 0px 10px #d3d3d3'}}
-                                                    className={`${style.guidebook}`}
-                                                />
+                    {
+                        books.map((item, key) => (
+                            <div
+                                key={key} 
+                                style={styles.slide}>
+                                <div className="columns is-vcentered is-centered">
+                                    {
+                                        item.map(book => (
+                                            <div
+                                                key={book.object_identifier}
+                                                className="column is-narrow has-text-centered">
+                                                <a 
+                                                    target="_blank"
+                                                    href={book.guidebook}>
+                                                    <div style={{'textAlign': 'center'}}>
+                                                        <img
+                                                            src={book.image}
+                                                            style={{'boxShadow': '0px 0px 10px #d3d3d3'}}
+                                                            className={`${style.guidebook}`}
+                                                        />
+                                                    </div>
+                                                    <div className={`${style.guidebook_title} tag is-info is-uppercase`}>
+                                                        {book.title}
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <div className={`${style.guidebook_title} tag is-info is-uppercase`}>
-                                                book {item}
-                                            </div>
-                                        </a>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </div>
-                    <div style={styles.slide}>
-                        <div className="columns is-vcentered is-centered">
-                            {
-                                    [6, 7, 8, 9, 10].map(item => (
-                                        <div
-                                            className="column is-narrow has-text-centered">
-                                            <a
-                                                target="_blank">
-                                                <div style={{textAlign: 'center'}}>
-                                                    <img
-                                                        src="/img/user_avatar.png"
-                                                        style={{'boxShadow': '0px 0px 10px #d3d3d3'}}
-                                                        className={`${style.guidebook}`}
-                                                    />
-                                                </div>
-                                                <div className={`${style.guidebook_title} tag is-info is-uppercase`}>
-                                                    book {item}
-                                                </div>
-                                            </a>
-                                        </div>
-                                    ))
-                                }
-                        </div>
-                    </div>
-                    <div style={styles.slide}>
-                        <div className="columns is-vcentered is-centered">
-                            {
-                                    [11, 12, 13].map(item => (
-                                        <div
-                                            className="column is-narrow has-text-centered">
-                                            <a
-                                                target="_blank">
-                                                <div style={{textAlign: 'center'}}>
-                                                    <img
-                                                        src="/img/user_avatar.png"
-                                                        style={{'boxShadow': '0px 0px 10px #d3d3d3'}}
-                                                        className={`${style.guidebook}`}
-                                                    />
-                                                </div>
-                                                <div className={`${style.guidebook_title} tag is-info is-uppercase`}>
-                                                    book {item}
-                                                </div>
-                                            </a>
-                                        </div>
-                                    ))
-                                }
-                        </div>
-                    </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        ))
+                    }
                     {/* <div style={Object.assign({}, styles.slide, styles.slide3)}>slide n°3</div> */}
                 </AutoPlaySwipeableViews>
             </div>
-            
-            
-            {/* <div style={{position: 'relative'}}>
-                <AutoPlaySwipeableViews 
-                    style={{overflow: 'hidden'}} 
-                    enableMouseEvents>
-                    <div 
-                        className="columns is-vcentered is-centered">
-                        {
-                            [1, 2, 3].map(item => (
-                                <div
-                                    className="column is-narrow has-text-centered">
-                                    <a
-                                        target="_blank">
-                                        <div style={{textAlign: 'center'}}>
-                                            <img
-                                                src="/img/user_avatar.png"
-                                                style={{'boxShadow': '0px 0px 10px #d3d3d3'}}
-                                                className={`${style.guidebook}`}
-                                            />
-                                        </div>
-                                        <div className={`${style.guidebook_title} tag is-info is-uppercase`}>
-                                            book
-                                        </div>
-                                    </a>
-                                </div>
-                            ))
-                        }
-                    </div>
-                        
-                    
-                </AutoPlaySwipeableViews>
-            </div> */}
-            
-            {/* <div className="columns is-vcentered is-centered">
-                {
-                    books.map(item => (
-                        <div
-                            key={item.object_identifier}
-                            className="column is-narrow has-text-centered">
-                            <a 
-                                target="_blank"
-                                href={item.guidebook}>
-                                <div style={{'textAlign': 'center'}}>
-                                    <img
-                                        src={item.image}
-                                        style={{'boxShadow': '0px 0px 10px #d3d3d3'}}
-                                        className={`${style.guidebook}`}
-                                    />
-                                </div>
-                                <div className={`${style.guidebook_title} tag is-info is-uppercase`}>
-                                    {item.title}
-                                </div>
-                            </a>
-                        </div>
-                    ))
-                }
-            </div> */}
             <br/>
         </PrivateRoute>    
     )

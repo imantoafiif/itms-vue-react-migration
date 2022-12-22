@@ -102,7 +102,7 @@ function Login() {
                             style={{height: '150px', padding: '25px'}}/>
                     </div>
                     <div className={style.login_page__card__main}>
-                        <div className={style.login_input}>
+                        {/* <div className={style.login_input}>
                             <label className={style.login_input__label}>
                                 Method
                             </label>
@@ -124,11 +124,9 @@ function Login() {
                                             </option>
                                         )
                                     }
-                                    {/* <option>LDAP</option>
-                                    <option>SSO</option> */}
                                 </select>
                             </div>
-                        </div>
+                        </div> */}
                         <div className={style.login_input}>
                             <label className={style.login_input__label}>
                                 Username
