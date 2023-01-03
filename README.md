@@ -1,3 +1,5 @@
-# ITMS Vue to React 18 migration
+# ITMS Vue to React 18 migration 👍
 
-2022 imantoafiif@gmail.com
+coded with ❤️ using ⚛️ by imantoafiif@gmail.com
+
+project started in 2022 as a hobby and for educational purpose in react development
