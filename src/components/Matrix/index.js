@@ -5,6 +5,7 @@ import './Matrix.scss'
 import axios from "../../axios-config";
 import { getBusinessCode, todayDate } from '../../helper';
 import { ReactSortable } from "react-sortablejs";
+import ReactLoading from 'react-loading';
 
 const Matrix = ({ allow_discretion = true }) => {
 
@@ -24,6 +25,7 @@ const Matrix = ({ allow_discretion = true }) => {
   const Swipeable = autoPlay(SwipeableViews);
 
   const handleChange = event => {
+    if(event.to.id === event.from.id) return
     let t_clusters = [...clusters]
     t_clusters[parseInt(event.to.id)].data.data.splice(
       event.newIndex, 
@@ -153,7 +155,7 @@ const Matrix = ({ allow_discretion = true }) => {
                                 }
                               </ReactSortable>
                             ) : 
-                            <center>Loading</center>
+                            <ReactLoading type="spin" color="green" width={50} height="100%"/>
                           }
                       </div>
                       <div className='column is-full'>

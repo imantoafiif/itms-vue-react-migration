@@ -5,6 +5,7 @@ import Text from "../../components/Search/Text";
 import Selector from "../../components/Search/Selector";
 import axios from "../../axios-config";
 import Matrix from "../../components/Matrix";
+import './admin.scss'
 
 // import WithNav from "../layouts/WithNav";
 
@@ -54,7 +55,7 @@ function AdminPage() {
     }, [])
 
     return (
-        <section style={{margin: '24px'}}>
+        <section className="section-container">
             <div className="columns is-multiline is-marginless is-paddingless">
                 <div className="column is-full">
                     <h1 className="title is-3">

@@ -21,7 +21,6 @@ function Home() {
 
     const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
     const [books, setBooks] = useState([])
-    const dispatch = useDispatch()
 
     const getBooks = async () => {
         let temp_books = []

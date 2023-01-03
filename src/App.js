@@ -17,6 +17,7 @@ import initAccount, { AccountProvider } from './user-account';
 import { createContext, useContext, useEffect, useState } from 'react';
 import axios from "./axios-config"
 import { getBusinessCode, todayDate } from './helper';
+import EventManagement from './pages/Talent/event-management';
 
 function App() {
   
@@ -97,6 +98,7 @@ function App() {
             <Route exact path='page1' element={<Page1/>}></Route>
             <Route path='admin/' element={<Admin/>}>
               <Route path='' element={<AdminPage/>}></Route>
+              <Route path='events' element={<EventManagement/>}></Route>
               <Route exact path='page2' element={<Page2/>}></Route>
             </Route> 
           </Route>
