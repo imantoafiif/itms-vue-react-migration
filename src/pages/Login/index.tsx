@@ -14,6 +14,7 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Link from '@mui/material/Link';
+import { url } from "inspector";
 
 function Login() {
     
@@ -105,9 +106,10 @@ function Login() {
                         sm={4}
                         md={7}
                         sx={{
-                          backgroundRepeat: 'no-repeat',
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center',  
+                            backgroundImage: 'url(/img/login_bg.jpg)',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',  
                         }}>
                     </Grid>
                     <Grid 
