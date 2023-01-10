@@ -1,6 +1,6 @@
 import moment from "moment";
 
-const checkvalidity = token => {
+const checkvalidity = (token:string | null = null) => {
     if(!token) return null
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

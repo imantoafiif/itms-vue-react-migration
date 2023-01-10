@@ -1,7 +1,8 @@
 import moment from 'moment';
+import { APP_ID, BUSCD } from './env';
 
 const getBusinessCode = () => {
-    return process.env.REACT_APP_BUSCD
+    return BUSCD
 }
 
 const todayDate = () => {
@@ -9,7 +10,7 @@ const todayDate = () => {
 }
 
 const getApplicationID = () => {
-    return process.env.REACT_APP_ID
+    return APP_ID
 }
 
 const getSession = () => {

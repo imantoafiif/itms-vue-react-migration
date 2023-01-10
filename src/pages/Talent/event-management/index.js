@@ -7,10 +7,19 @@ import Text from '../../../components/Search/Text'
 import { getBusinessCode, todayDate } from '../../../helper'
 import ReactLoading from 'react-loading';
 import './event-management.scss'
+import useFetch from '../../../helper/hooks/useFetch'
+import EventCard from '../../../components/EventCard'
 
 const EventManagement = () => {
 
-    const [events, setEvents] = useState()
+    const [ items, loading ] = useFetch('/tms/api/event', {
+        'begin_date_lte': todayDate(),
+        'end_date_gte': todayDate(),
+        'business_code': getBusinessCode(),
+        'order[CHGDT]': 'desc',
+        'event_type': ['ET', 'ETP', 'ETQ', 'ETD', 'ETC', 'ETPL'],
+        'include': 'committee,head_committee'
+    })
 
     const crumbs = [
         { label: 'Home', to: '/', key: 'HOME' },
@@ -25,31 +34,8 @@ const EventManagement = () => {
     ])
 
     const onSearch = v => {
-
+        
     }
-
-    const fetchEvents = () => {
-        axios.get(`/tms/api/event`, {
-            params: {
-                'begin_date_lte': todayDate(),
-                'end_date_gte': todayDate(),
-                'business_code': getBusinessCode(),
-                'order[CHGDT]': 'desc',
-                'event_type': ['ET', 'ETP', 'ETQ', 'ETD', 'ETC', 'ETPL'],
-                'include': 'committee,head_committee'
-            }
-        }).then(r => {
-            if(Array.isArray(r.data.data) && r.data.data.length) {
-                setEvents(r.data.data)
-            }
-        }).catch(e => {
-            console.log(e)
-        })
-    }
-
-    useEffect(() => {
-        fetchEvents()
-    }, [])
 
     return (
         <section className='section-container'>
@@ -90,18 +76,19 @@ const EventManagement = () => {
                 </div>
                 <div className='column is-full'>
                     <h4 className='title is-4'>
-                        {events ? events.length : 0} Available Events
+                        {loading ? 0 : items.data.data.length} Available Event{loading ? '' : (items.data.data.length > 1 ? 's' : '')}
                         {/* <ReactLoading type="bubbles" color="blue" /> */}
                     </h4>
                 </div>
                 <div className='column is-full'>
                     {
-                        events ? 
+                        loading ? 
+                        <p className='has-text-centered'>Loading</p> :
                         (
-                            //if length is 0 then events has been fetched but no ongoing events are available
-                            events.length ? <></> : <></>
-                        ) : 
-                        <p className='has-text-centered'>Loading</p>
+                            items.data.data.map(item => (
+                                <EventCard to={`${item.event_code}`}></EventCard>
+                            ))
+                        )
                     }
                 </div>
             </div>

@@ -1,4 +1,4 @@
-.login_full {
+.login-full {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -11,15 +11,14 @@
   background-blend-mode: darken;
   z-index: 1;
 }
-
-.login_page {
+.login-page {
   position: relative;
   // background-image: url("/img/askrindo-wallpaper-rev.jpg");
   background-position-y: -64px;
   background-position-x: right;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh; 
+  height: 100vh;
   width: 100vw;
   /* background-size: contain;
   background-position: right;
@@ -62,7 +61,7 @@
   }
 }
 
-.login_page_button {
+.login-page-button {
   &,
   &:focus,
   &:active {
@@ -71,7 +70,7 @@
   }
 }
 
-.login_input {
+.login-input {
   & + & {
     margin-top: 2rem;
   }
@@ -110,7 +109,7 @@
         right: 0;
       }
 
-      &.icon_toggleable {
+      &.icon-toggleable {
         &:hover {
           cursor: pointer;
           background-color: #eee;
@@ -162,7 +161,7 @@
   }
 }
 
-.login_page_button {
+.login-page-button {
   cursor: pointer;
 
   display: flex;
@@ -226,12 +225,6 @@
   }
 }
 
-.login_page_button__spinner > i {
+.login-page-button__spinner > i {
   animation: rotate 1s infinite linear;
-}
-
-.login_error {
-  max-width: 70%;
-  margin: auto;
-  font-size: 13px;
 }

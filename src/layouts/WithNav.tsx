@@ -4,13 +4,18 @@ import axios from "../axios-config";
 import Navbar from "../components/Navbar";
 import { getBusinessCode } from "../helper";
 
-export const Theme = createContext()
+interface t_store {
+    data: any,
+    changeTheme: (c:string) => void
+}
+
+export const Theme = createContext<t_store | null>(null)
 
 function WithNav() {
 
-    const [store, setStore] = useState({
+    const [store, setStore] = useState<t_store>({
         data: null,
-        changeTheme: c => {
+        changeTheme: (c:string) => {
             setStore(prevstate => ({
                 ...prevstate,
                 data: {

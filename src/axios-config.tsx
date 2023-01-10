@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { AxiosInstance } from "axios";
+import { BASE_URL } from "./helper/env";
 
-const instance = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL
+const instance:AxiosInstance = axios.create({
+    baseURL: BASE_URL
 });
 
 instance.interceptors.request.use(
@@ -13,16 +14,9 @@ instance.interceptors.request.use(
         }
         return config
     }, 
-    error => {
-        Promise.reject(error)
-        alert('token expired')
+    (e:Error) => {
+        Promise.reject(e)
     }
 )
-
-// instance.interceptors.response.use(
-//     async config => {
-
-//     }
-// )
 
 export default instance;

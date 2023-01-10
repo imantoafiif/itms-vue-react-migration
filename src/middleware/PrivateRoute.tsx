@@ -3,10 +3,15 @@ import { Navigate } from 'react-router-dom'
 import checkvalidity from '../helper/check-validity'
 import { AccountProvider } from '../user-account'
 
-const PrivateRoute = ({ admin_only = false, children }) => {
+interface props {
+    admin_only: boolean,
+    children: JSX.Element,
+}
 
-    const user = useContext(AccountProvider)
-    const session = localStorage.getItem('auth.token')
+const PrivateRoute = ({ admin_only = false, children }: props) => {
+
+    const user:any = useContext(AccountProvider)
+    const session:string | null = localStorage.getItem('auth.token')
 
     if(!checkvalidity(session)) {
         localStorage.removeItem('auth.token')
@@ -14,7 +19,7 @@ const PrivateRoute = ({ admin_only = false, children }) => {
     }
 
     if(admin_only) {
-        const is_admin = user.user?.user_role.find(item => {
+        const is_admin = user.user?.user_role.find((item:any) => {
             return (
                 item.role_code.role_code === 'SADMNDYA' ||
                 item.role_code.role_code === 'ADMNDYA' || 

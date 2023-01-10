@@ -22,7 +22,6 @@ import EventManagement from './pages/Talent/event-management';
 function App() {
   
   // const account = initAccount()
-  const user = useContext(AccountProvider)
   const [store, setStore] = useState({
     user: null,
     menus: {
@@ -44,34 +43,6 @@ function App() {
       }))
     }
   })
-
-  const initMenus = async () => {
-    alert('oy')
-    await axios.get(`/ldap/api/rbac/menu-parent`, {
-      params: {
-          'include': 'menu_child,menu_code',
-          'order[SEQNO]': 'ASC',
-          'menu_level': 2,
-          'business_code': getBusinessCode(),
-          'distinct_seqno_mnucd': 'yes',
-          'begin_date_lte': todayDate(),
-          'end_date_gt': todayDate(),
-          'role_code[]':  user.user?.user_role.map(item => item.role_code.role_code),
-          'per_page': 999,
-      }
-    }).then(r => {
-      alert('didalem')
-      if(Array.isArray(r.data.data) && r.data.data.length) {
-        store.setMenus(r.data.data)
-      }
-    }).catch(e => {
-      console.log(e)
-    })
-  }
-
-  useEffect(() => {
-    console.log('store', store)
-  }, [store])
 
   useEffect(() => {
     if(window.location.pathname === '/login') return

@@ -1,10 +1,13 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-const Guest = (props) => {
+interface props {
+    children: JSX.Element
+}
+
+const Guest = ({ children }: props) => {
 
     const session = localStorage.getItem('auth.token')
-    console.log(props.location)
 
     return (
         <>
@@ -13,7 +16,7 @@ const Guest = (props) => {
             <Navigate to='/'></Navigate> } */}
            { 
                 !session ?
-                props.children : 
+                children : 
                 <Navigate to='/homepage'></Navigate>
            }
         </>

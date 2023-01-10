@@ -5,21 +5,20 @@ import { userSlice, setSession } from '../../store/slices/sessionSlice';
 import { useDispatch, useSelector } from "react-redux";
 import axios from "../../axios-config";
 import { AccountProvider } from "../../user-account";
-import CryptoJS  from "crypto-js";
-import style from './Login.module.scss';
+import CryptoJS from "crypto-js";
+import './Login.scss'
+import { SECRET } from "../../helper/env";
 
 function Login() {
     
     const navigate = useNavigate()
-    const user = useRef()
-    const password = useRef()
-    const [isLoginError, setIsLoginError] = useState(false)
-    const [isLoading, setLoading] = useState(false)
-    const [remember, setRemember] = useState(false)
-    const [selectedMethod, setSelectedMethod] = useState('LDAP')
-    const [passwordVisible, setPasswordVisible] = useState(false)
+    const [user, setUser] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [isLoginError, setIsLoginError] = useState<boolean>(false)
+    const [isLoading, setLoading] = useState<boolean>(false)
+    const [remember, setRemember] = useState<boolean>(false)
+    const [passwordVisible, setPasswordVisible] = useState<boolean>(false)
     const account = useContext(AccountProvider)
-    const secret = `I!OJ1n4!Nl$cmtv5aB^KK3xV5jNlB72RYSg7OrmoyCBmFpfpmFeZ51LsQ%.VNrNE>uw<P>rnJn6^1!$k>3>TPg'q(B~TBPvRH8/i(s$ucgz+/+e!|`
     const methods = [
         { value: 'LDAP', label: 'LDAP' }, 
         { value: 'SSO', label: 'SSO' }
@@ -35,7 +34,7 @@ function Login() {
         // }
     }, [])
 
-    const login = async e => {
+    const login = async (e:any) => {
         console.log('remember', user)
         e.preventDefault()
         setLoading(true)
@@ -50,16 +49,16 @@ function Login() {
         }
         
         if(remember) {
-            localStorage.setItem('auth.user', CryptoJS.AES.encrypt(user, secret))
-            localStorage.setItem('auth.pass', CryptoJS.AES.encrypt(password, secret))
+            localStorage.setItem('auth.user', CryptoJS.AES.encrypt(user, SECRET).toString())
+            localStorage.setItem('auth.pass', CryptoJS.AES.encrypt(password, SECRET).toString())
         }
 
-        let sso = null
+        let sso:any = null
 
         axios.post('/ldap/api/auth/login', {
             application_id: process.env.REACT_APP_ID,
-            password : sso ? 'secret' : password.current.value,
-            username: sso ? sso.data[0].nik : user.current.value,
+            password : sso ? 'secret' : password,
+            username: sso ? sso.data[0].nik : user,
         })
         .then(r => {
             // setLoading(false)
@@ -91,69 +90,43 @@ function Login() {
 
     return (
         <Guest>
-            <main className={style.login_page}>
+            <main className="login-page">
                 <form 
                     onSubmit={login}
                     method="post"
-                    className={style.login_page__card}>
-                    <div className={`${style.login_page__card__brand} is-paddingless`}>
+                    className="login-page__card">
+                    <div className="login-page__card__brand is-paddingless">
                         <img 
                             src="/logo192.png"
                             style={{height: '150px', padding: '25px'}}/>
                     </div>
-                    <div className={style.login_page__card__main}>
-                        {/* <div className={style.login_input}>
-                            <label className={style.login_input__label}>
-                                Method
-                            </label>
-                            <div className={style.login_input__field}>
-                                <i className="fa fa-cog"></i>
-                                <select
-                                    required 
-                                    onChange={e => {
-                                        // user.current.value = ''
-                                        // password.current.value = ''
-                                        setSelectedMethod(e.target.value)
-                                    }}>
-                                    {
-                                        methods.map(item => 
-                                            <option    
-                                                value={item.value}
-                                                key={item.value}>
-                                                {item.label}    
-                                            </option>
-                                        )
-                                    }
-                                </select>
-                            </div>
-                        </div> */}
-                        <div className={style.login_input}>
-                            <label className={style.login_input__label}>
+                    <div className="login-page__card__main">
+                        <div className="login-input">
+                            <label className="login-input__label">
                                 Username
                             </label>
-                            <div className={style.login_input__field}>
+                            <div className="login-input__field">
                                 <i className="fa fa-user"></i>
                                 <input 
-                                    ref={user}
+                                    onChange={(e) => setUser(e.target.value)}
                                     required
                                     type="text"
                                     autoComplete="on"/>
                             </div>
                         </div>
-                        <div className={style.login_input}>
-                            <label className={style.login_input__label}>
+                        <div className="login-input">
+                            <label className="login-input__label">
                                 Password
                             </label>
-                            <div className={style.login_input__field}>
+                            <div className="login-input__field">
                                 <i className="fa fa-key"></i>
                                 <input 
-                                    ref={password}
                                     required
                                     type={passwordVisible ? 'text' : 'password'}
                                     autoComplete="on"/>
                                 <i 
                                     onClick={() => setPasswordVisible(!passwordVisible)}
-                                    className={`fa fa-eye ${style.icon_toggleable}`}>
+                                    className="fa fa-eye icon-toggleable">
 
                                 </i>
                             </div>
@@ -162,7 +135,7 @@ function Login() {
                     {
                         isLoginError &&
                         (
-                            <div className={`${style.login_error} has-text-centered has-text-weight-bold is-uppercase has-text-danger`}>
+                            <div className="has-text-centered has-text-weight-bold is-uppercase has-text-danger">
                                 <span>You have entered invalid credentials</span>
                             </div>
                         ) 
@@ -171,11 +144,11 @@ function Login() {
                         <button 
                             disabled={isLoading}
                             type="submit"
-                            className={style.login_page_button}>
+                            className="login-page-button">
                             {
                                 isLoading ? 
                                 (
-                                    <span className={style.login_page_button__spinner}>
+                                    <span className="login-page-button__spinner">
                                         <i className="fa fa-spinner"></i>
                                     </span>
                                 ) :

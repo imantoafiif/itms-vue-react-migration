@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/Sidebar";
 import PrivateRoute from "../../middleware/PrivateRoute";
-import style from './Admin.module.scss'
+import './Admin.scss'
 
 function Admin() {
     return (
@@ -13,10 +13,10 @@ function Admin() {
                 <div
                     style={{marginTop: '52px'}} 
                     className="columns">
-                    <div className={`${style.sidebar} column is-paddingless`}>
+                    <div className="sidebar column is-paddingless">
                         <Sidebar/>
                     </div>
-                    <div className={`${style.content} column is-paddingless`}>
+                    <div className="content column is-paddingless">
                         <Outlet/>
                     </div>
                 </div>
