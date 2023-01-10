@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link as Navigate, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import Guest from "../../middleware/Guest";
 import { userSlice, setSession } from '../../store/slices/sessionSlice';
@@ -7,13 +7,20 @@ import axios from "../../axios-config";
 import { AccountProvider } from "../../user-account";
 import CryptoJS from "crypto-js";
 import './Login.scss'
-import { SECRET } from "../../helper/env";
+import { APP_ID, SECRET } from "../../helper/env";
+import { ThemeProvider } from "@mui/system";
+import { Button, Checkbox, FormControlLabel, TextField, Typography, createTheme } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Link from '@mui/material/Link';
 
 function Login() {
     
+    const theme = createTheme()
     const navigate = useNavigate()
-    const [user, setUser] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
+    const [username, setUser] = useState<string | null>(null)
+    const [password, setPassword] = useState<string | null>(null)
     const [isLoginError, setIsLoginError] = useState<boolean>(false)
     const [isLoading, setLoading] = useState<boolean>(false)
     const [remember, setRemember] = useState<boolean>(false)
@@ -35,7 +42,7 @@ function Login() {
     }, [])
 
     const login = async (e:any) => {
-        console.log('remember', user)
+        console.log('remember', username)
         e.preventDefault()
         setLoading(true)
         setIsLoginError(false)
@@ -49,16 +56,16 @@ function Login() {
         }
         
         if(remember) {
-            localStorage.setItem('auth.user', CryptoJS.AES.encrypt(user, SECRET).toString())
-            localStorage.setItem('auth.pass', CryptoJS.AES.encrypt(password, SECRET).toString())
+            localStorage.setItem('auth.user', CryptoJS.AES.encrypt(username as string, SECRET).toString())
+            localStorage.setItem('auth.pass', CryptoJS.AES.encrypt(password as string, SECRET).toString())
         }
 
         let sso:any = null
 
         axios.post('/ldap/api/auth/login', {
-            application_id: process.env.REACT_APP_ID,
-            password : sso ? 'secret' : password,
-            username: sso ? sso.data[0].nik : user,
+            application_id: APP_ID,
+            username,
+            password,
         })
         .then(r => {
             // setLoading(false)
@@ -90,7 +97,86 @@ function Login() {
 
     return (
         <Guest>
-            <main className="login-page">
+            <ThemeProvider theme={theme}>
+                <Grid container component="main" sx={{ height: '100vh' }}>
+                    <Grid
+                        item
+                        xs={false}
+                        sm={4}
+                        md={7}
+                        sx={{
+                          backgroundRepeat: 'no-repeat',
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',  
+                        }}>
+                    </Grid>
+                    <Grid 
+                        item 
+                        xs={12} 
+                        sm={8} 
+                        md={5} 
+                        component={Paper} 
+                        elevation={6} 
+                        square>
+                        <Box
+                            sx={{
+                                my: 8,
+                                mx: 4,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}>
+                            <img 
+                                src="/logo192.png"
+                                style={{height: '150px', padding: '25px'}}/>
+                            {/* <Typography component="h1" variant="h5">
+                                Sign in
+                            </Typography> */}
+                            <Box 
+                                onSubmit={login}
+                                method="post"
+                                component="form" 
+                                sx={{ mt: 1 }}>
+                            <TextField
+                                onChange={e => setUser(e.target.value)}
+                                margin="normal"
+                                required
+                                fullWidth
+                                id="username"
+                                label="Username"
+                                name="username"
+                                autoComplete="username"
+                                autoFocus
+                            />
+                            <TextField
+                                onChange={e => setPassword(e.target.value)}
+                                margin="normal"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
+                            <FormControlLabel
+                                control={<Checkbox value="remember" color="primary" />}
+                                label="Remember me"
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 3, mb: 2 }}
+                            >
+                                Sign In
+                            </Button>
+                            </Box>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </ThemeProvider>
+            {/* <main className="login-page">
                 <form 
                     onSubmit={login}
                     method="post"
@@ -158,7 +244,7 @@ function Login() {
                     </div>
                     <br></br>
                 </form>
-            </main>
+            </main> */}
         </Guest>
     )
 }
