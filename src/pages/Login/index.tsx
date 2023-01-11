@@ -9,12 +9,14 @@ import CryptoJS from "crypto-js";
 import './Login.scss'
 import { APP_ID, SECRET } from "../../helper/env";
 import { ThemeProvider } from "@mui/system";
-import { Button, Checkbox, FormControlLabel, TextField, Typography, createTheme } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, InputAdornment, TextField, Typography, createTheme } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Link from '@mui/material/Link';
 import { url } from "inspector";
+import { Alert } from "@mui/lab";
 
 function Login() {
     
@@ -25,22 +27,28 @@ function Login() {
     const [isLoginError, setIsLoginError] = useState<boolean>(false)
     const [isLoading, setLoading] = useState<boolean>(false)
     const [remember, setRemember] = useState<boolean>(false)
-    const [passwordVisible, setPasswordVisible] = useState<boolean>(false)
     const account = useContext(AccountProvider)
-    const methods = [
-        { value: 'LDAP', label: 'LDAP' }, 
-        { value: 'SSO', label: 'SSO' }
-    ]
 
     useEffect(() => {
         let uname = localStorage.getItem('auth.user')
         let pass = localStorage.getItem('auth.pass')
-        // if(uname && pass) {
-        //     setUser(CryptoJS.AES.decrypt(uname, secret).toString(CryptoJS.enc.Utf8))
-        //     setPassword(CryptoJS.AES.decrypt(pass, secret).toString(CryptoJS.enc.Utf8))
-        //     setRemember(true)
-        // }
+        if(uname && pass) {
+            setUser(CryptoJS.AES.decrypt(uname, SECRET).toString(CryptoJS.enc.Utf8))
+            setPassword(CryptoJS.AES.decrypt(pass, SECRET).toString(CryptoJS.enc.Utf8))
+            setRemember(true)
+        }
     }, [])
+
+    // function identity<T>(value: T): T {
+    //     return value;
+    //   }
+      
+    // const foo = <T>(x: T) => x
+
+    const handleChange = <T,>(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setter: React.Dispatch<React.SetStateAction<T>>) => {
+        setter(e.target.value as T)
+        setIsLoginError(false)
+    }
 
     const login = async (e:any) => {
         console.log('remember', username)
@@ -48,8 +56,8 @@ function Login() {
         setLoading(true)
         setIsLoginError(false)
 
-        let uname = localStorage.getItem('auth.user')
-        let pass = localStorage.getItem('auth.pass')
+        let uname:string | null = localStorage.getItem('auth.user')
+        let pass:string | null = localStorage.getItem('auth.pass')
 
         if(uname && pass && !remember) {
             localStorage.removeItem('auth.user')
@@ -131,122 +139,62 @@ function Login() {
                             <img 
                                 src="/logo192.png"
                                 style={{height: '150px', padding: '25px'}}/>
-                            {/* <Typography component="h1" variant="h5">
-                                Sign in
-                            </Typography> */}
                             <Box 
                                 onSubmit={login}
                                 method="post"
                                 component="form" 
                                 sx={{ mt: 1 }}>
-                            <TextField
-                                onChange={e => setUser(e.target.value)}
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Username"
-                                name="username"
-                                autoComplete="username"
-                                autoFocus
-                            />
-                            <TextField
-                                onChange={e => setPassword(e.target.value)}
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Sign In
-                            </Button>
+                                <TextField
+                                    value={username}
+                                    onChange={e => handleChange<string | null>(e, setUser)}
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="username"
+                                    label="Username"
+                                    name="username"
+                                    autoComplete="username"
+                                    autoFocus
+                                />
+                                <TextField
+                                    value={password}
+                                    onChange={e => handleChange<string | null>(e, setPassword)}
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                            
+                                <FormControlLabel
+                                    control={
+                                        <Checkbox 
+                                            checked={remember}
+                                            onChange={e => setRemember(e.target.checked)}
+                                            color="primary" 
+                                        />
+                                    }
+                                    label="Remember me"
+                                />
+                                {
+                                    isLoginError &&<Alert severity="error">Wrong username or password</Alert>
+                                }
+                                <LoadingButton
+                                    loading={isLoading}
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}>
+                                    Sign In
+                                </LoadingButton>
                             </Box>
                         </Box>
                     </Grid>
                 </Grid>
             </ThemeProvider>
-            {/* <main className="login-page">
-                <form 
-                    onSubmit={login}
-                    method="post"
-                    className="login-page__card">
-                    <div className="login-page__card__brand is-paddingless">
-                        <img 
-                            src="/logo192.png"
-                            style={{height: '150px', padding: '25px'}}/>
-                    </div>
-                    <div className="login-page__card__main">
-                        <div className="login-input">
-                            <label className="login-input__label">
-                                Username
-                            </label>
-                            <div className="login-input__field">
-                                <i className="fa fa-user"></i>
-                                <input 
-                                    onChange={(e) => setUser(e.target.value)}
-                                    required
-                                    type="text"
-                                    autoComplete="on"/>
-                            </div>
-                        </div>
-                        <div className="login-input">
-                            <label className="login-input__label">
-                                Password
-                            </label>
-                            <div className="login-input__field">
-                                <i className="fa fa-key"></i>
-                                <input 
-                                    required
-                                    type={passwordVisible ? 'text' : 'password'}
-                                    autoComplete="on"/>
-                                <i 
-                                    onClick={() => setPasswordVisible(!passwordVisible)}
-                                    className="fa fa-eye icon-toggleable">
-
-                                </i>
-                            </div>
-                        </div>
-                    </div>
-                    {
-                        isLoginError &&
-                        (
-                            <div className="has-text-centered has-text-weight-bold is-uppercase has-text-danger">
-                                <span>You have entered invalid credentials</span>
-                            </div>
-                        ) 
-                    }
-                    <div style={{display: "flex", justifyContent: "center", padding: "1rem 0", marginBottom: "1rem"}}>
-                        <button 
-                            disabled={isLoading}
-                            type="submit"
-                            className="login-page-button">
-                            {
-                                isLoading ? 
-                                (
-                                    <span className="login-page-button__spinner">
-                                        <i className="fa fa-spinner"></i>
-                                    </span>
-                                ) :
-                                (<span>LOGIN</span>)
-                            }
-                        </button>
-                    </div>
-                    <br></br>
-                </form>
-            </main> */}
         </Guest>
     )
 }
